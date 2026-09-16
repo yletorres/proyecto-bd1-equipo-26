@@ -1,0 +1,874 @@
+{
+  "diagramType": 2,
+  "data": {
+    "nodes": [
+      {
+        "id": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
+        "type": "Table",
+        "position": {
+          "x": 623.3529982740957,
+          "y": -93.45712987433288
+        },
+        "data": {
+          "label": "PERSONA",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "eb64c82d-9462-4406-88f4-6c0badd4a32d",
+              "name": "DNI_persona",
+              "type": "INT",
+              "position": 0,
+              "isPrimaryKey": true,
+              "isOptional": false
+            },
+            {
+              "id": "df21f9ef-25ec-4abd-9e0f-d075302ea34b",
+              "name": "NombreCompleto_persona",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "150"
+            },
+            {
+              "id": "90a67c5f-3a4f-43fc-8723-8f0417583d1e",
+              "name": "Telefono_persona",
+              "type": "INT",
+              "position": 0,
+              "size": "30"
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 115
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+        "type": "Table",
+        "position": {
+          "x": 318.59493592578565,
+          "y": 7.8848335904210245
+        },
+        "data": {
+          "label": "CLIENTE",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "8dc19d52-9dfb-441a-9807-5552df07380c",
+              "name": "Direccion ",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "200",
+              "isPrimaryKey": false,
+              "isUnique": false
+            },
+            {
+              "id": "b912f637-03c8-4827-8cc5-98a7bfd5f943",
+              "name": "FechaDeNacimiento ",
+              "type": "DATE",
+              "position": 0,
+              "isPrimaryKey": false,
+              "isUnique": false
+            },
+            {
+              "id": "fk_799aa282-cd5c-4294-9782-9f6122b5e8e0",
+              "name": "fk_PERSONA",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "64bf634c-5d90-4c63-a29f-f6607d959117",
+                "sourceTableId": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
+                "columns": [
+                  {
+                    "id": "fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                    "name": "DNI_persona",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isPrimaryKey": true,
+              "isOptional": false,
+              "isUnique": true
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 100
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12",
+        "type": "Table",
+        "position": {
+          "x": 947.4682178856467,
+          "y": 8.182230300415085
+        },
+        "data": {
+          "label": "PROFESIONAL",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "0266ccef-e62d-4fd6-8fe7-de9b472d2851",
+              "name": "FechaDeIngreso ",
+              "type": "DATE",
+              "position": 0,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "aae3a45d-be5f-4789-b3bf-75aac72a5fee",
+              "name": "Matricula ",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "50",
+              "isOptional": true,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "fk_35b849d9-7e10-47dc-a9c0-1434e37301c7",
+              "name": "fk_PERSONA",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "d0cc361e-13d4-425d-896c-e37259fa5712",
+                "sourceTableId": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
+                "columns": [
+                  {
+                    "id": "fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                    "name": "DNI_persona",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isPrimaryKey": true,
+              "isOptional": false
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 100
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "66f11736-3bb3-4289-b7c2-1567f9a16d25",
+        "type": "Table",
+        "position": {
+          "x": 311.2750420797153,
+          "y": 428.40520658001185
+        },
+        "data": {
+          "label": "CAMILLA",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "9dbd4b3d-3acd-4910-b9d0-da5faef919d5",
+              "name": "id_camilla",
+              "type": "INT",
+              "position": 0,
+              "isPrimaryKey": true,
+              "isOptional": false,
+              "isUnique": true
+            },
+            {
+              "id": "1ac25cfe-cbb1-45ff-9d7c-714dbc3942d4",
+              "name": "Nombre ",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "100",
+              "isPrimaryKey": false,
+              "isUnique": false
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 75
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "62f385f7-f8c8-4b11-8261-dbc3c5572589",
+        "type": "Table",
+        "position": {
+          "x": 309.3265485907872,
+          "y": 561.6959624237533
+        },
+        "data": {
+          "label": "SERVICIOS",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "3345f1c4-d281-4c85-b66d-ffea1f5f913a",
+              "name": "id_servicio",
+              "type": "INT",
+              "position": 0,
+              "isPrimaryKey": true,
+              "isOptional": false
+            },
+            {
+              "id": "018d228a-a872-464d-bc63-1db39b72ffcd",
+              "name": "Denominacion ",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "150"
+            },
+            {
+              "id": "4de10705-a359-4d72-84f4-9431be4a9dcf",
+              "name": "PrecioUnitario",
+              "type": "FLOAT",
+              "position": 0
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 99
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "88513d3e-2993-40c3-84b2-cfde9f5a409a",
+        "type": "Table",
+        "position": {
+          "x": 1091.4571298743328,
+          "y": 674.0519232943211
+        },
+        "data": {
+          "label": "PRODUCTOS",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "db3b3310-1e3c-47f3-9961-9de0a0f98659",
+              "name": "Id_producto",
+              "type": "INT",
+              "position": 0,
+              "isPrimaryKey": true,
+              "isOptional": false
+            },
+            {
+              "id": "701e798b-09d3-4e82-b53a-4aa7978c81fa",
+              "name": "NombreProducto",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "150"
+            },
+            {
+              "id": "1d753912-15f8-481d-b4a8-bff1196d7991",
+              "name": "PrecioVigente",
+              "type": "FLOAT",
+              "position": 0
+            },
+            {
+              "id": "dad1733b-7739-412d-bb06-c8a4fdd1418e",
+              "name": "Stock_disponible",
+              "type": "INT",
+              "position": 0
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 124
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "298ac577-61d2-4d2b-80c4-05b660a5e293",
+        "type": "Table",
+        "position": {
+          "x": 305.882514874916,
+          "y": 139.0457391513251
+        },
+        "data": {
+          "label": "TURNO",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "a2aaf8ea-4328-456c-9a7d-f4be95500929",
+              "name": "Id_turno",
+              "type": "INT",
+              "position": 0,
+              "isPrimaryKey": true,
+              "isOptional": false,
+              "isUnique": false
+            },
+            {
+              "id": "e33308fe-7279-4fed-b2e8-7166add97db3",
+              "name": "FechaTurno ",
+              "type": "DATE",
+              "position": 0,
+              "isUnique": false,
+              "groupNumbers": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "c2f26c20-f411-4591-8811-261ca25c2f7c",
+              "name": "FranjaHoraria ",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "50",
+              "isUnique": false,
+              "groupNumbers": [
+                1,
+                2
+              ]
+            },
+            {
+              "id": "cc950e3a-8cbe-474d-a529-61110195c7f7",
+              "name": "Estado",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "20",
+              "isUnique": false
+            },
+            {
+              "id": "6027b6e7-3281-47e3-a762-9b29b7c56c98",
+              "name": "MetodoPagoTurno ",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "50",
+              "isUnique": false
+            },
+            {
+              "id": "fk_c574af73-bdfc-4781-921e-ba7a1d03402d",
+              "name": "fk_CLIENTE",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "5a357b83-91c7-43d0-a2f2-993e7ce4167e",
+                "sourceTableId": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+                "columns": [
+                  {
+                    "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                    "name": "DNI_persona",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isUnique": false,
+              "groupNumbers": [
+                1
+              ]
+            },
+            {
+              "id": "fk_30b42888-e17c-46a8-a334-6255184f48c4",
+              "name": "fk_CAMILLA",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "5565629b-6849-4c17-8ad6-81c0caf04440",
+                "sourceTableId": "66f11736-3bb3-4289-b7c2-1567f9a16d25",
+                "columns": [
+                  {
+                    "id": "fk_9dbd4b3d-3acd-4910-b9d0-da5faef919d5",
+                    "name": "Id_camilla",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isUnique": false,
+              "groupNumbers": [
+                2
+              ]
+            },
+            {
+              "id": "fk_adec8b1c-e09a-446d-9325-aa9998939fb0",
+              "name": "fk_SERVICIOS",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "955c31e6-48d3-4f37-90e2-f3abe6cf55ba",
+                "sourceTableId": "62f385f7-f8c8-4b11-8261-dbc3c5572589",
+                "columns": [
+                  {
+                    "id": "fk_3345f1c4-d281-4c85-b66d-ffea1f5f913a",
+                    "name": "Id_servicio",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isUnique": false
+            },
+            {
+              "id": "3390336b-0cfe-432c-8094-ee3b2fa24b21",
+              "name": "Precio_historico",
+              "type": "FLOAT",
+              "position": 0,
+              "isUnique": false
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 274,
+          "height": 248
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73",
+        "type": "Table",
+        "position": {
+          "x": 587.752686608468,
+          "y": 675.6246619127858
+        },
+        "data": {
+          "label": "VENTAS",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "121d2b88-1780-4cfc-aa05-5f865b19e900",
+              "name": "id_venta",
+              "type": "INT",
+              "position": 0,
+              "isPrimaryKey": true,
+              "isOptional": false
+            },
+            {
+              "id": "f8c2f35f-406a-4103-8373-eef820b47cf3",
+              "name": "FechaVenta ",
+              "type": "DATE",
+              "position": 0
+            },
+            {
+              "id": "fba3c30d-7b8a-4abd-907f-608f318a75ab",
+              "name": "MetodoPagoVenta ",
+              "type": "VARCHAR(n)",
+              "position": 0,
+              "size": "50"
+            },
+            {
+              "id": "fk_068d1aaa-1792-466c-a01b-109335583ad9",
+              "name": "fk_CLIENTE",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "8556c60d-f824-473d-bbbf-8a60afc3246e",
+                "sourceTableId": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+                "columns": [
+                  {
+                    "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                    "name": "DNI_cliente",
+                    "type": "INT"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "2e519915-618e-4bae-9127-012d07ec3be5",
+              "name": "TotalDeVenta",
+              "type": "FLOAT",
+              "position": 0
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 149
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "d7ad1987-37aa-4d69-9e5f-9a0a74f60541",
+        "type": "Table",
+        "position": {
+          "x": 949.4525276779003,
+          "y": 205.23501672741926
+        },
+        "data": {
+          "label": "SE ASIGNA_TURNO",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "fk_65eba8e7-0253-4741-82e2-b455d3f08ebb",
+              "name": "fk_PROFESIONAL",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "699d873d-a44a-4591-a65a-2903ee9f92a7",
+                "sourceTableId": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12",
+                "columns": [
+                  {
+                    "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                    "name": "DNI_persona",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isPrimaryKey": true,
+              "isOptional": false
+            },
+            {
+              "id": "fk_7305d8e9-8f6a-4128-9053-765f766e770c",
+              "name": "fk_TURNO",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "8e3c928c-d3fc-4376-9431-13a5cfb6c490",
+                "sourceTableId": "298ac577-61d2-4d2b-80c4-05b660a5e293",
+                "columns": [
+                  {
+                    "id": "fk_a2aaf8ea-4328-456c-9a7d-f4be95500929",
+                    "name": "id_turno",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isPrimaryKey": true,
+              "isOptional": false
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 76
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "8f7a5c60-909b-4c6b-9327-505c03283f28",
+        "type": "Table",
+        "position": {
+          "x": 847.2892776011628,
+          "y": 492.24742107511764
+        },
+        "data": {
+          "label": "CONTIENE ",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "1dd83375-1ae9-4d52-9df8-f57295a928fc",
+              "name": "Cantidad ",
+              "type": "INT",
+              "position": 0,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "3bfdde0f-5f4f-4ff4-bb29-f315c48987ce",
+              "name": "Precio ",
+              "type": "FLOAT",
+              "position": 0,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "fk_395c9d82-c8d3-474b-b4f2-25b2f7511a3d",
+              "name": "fk_VENTAS",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "9fc2a0d0-95a3-4bfd-9fcb-43c865066ba2",
+                "sourceTableId": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73",
+                "columns": [
+                  {
+                    "id": "fk_121d2b88-1780-4cfc-aa05-5f865b19e900",
+                    "name": "Id_venta",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isPrimaryKey": true,
+              "isOptional": false
+            },
+            {
+              "id": "fk_066ab026-7434-4a71-8c52-6c46b5b9c2cd",
+              "name": "fk_PRODUCTOS",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "1b058a0e-61f4-4126-9cb8-c61d5a5c68b6",
+                "sourceTableId": "88513d3e-2993-40c3-84b2-cfde9f5a409a",
+                "columns": [
+                  {
+                    "id": "fk_db3b3310-1e3c-47f3-9961-9de0a0f98659",
+                    "name": "Id_producto",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "isPrimaryKey": true,
+              "isOptional": false
+            }
+          ],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 125
+        },
+        "selected": false,
+        "dragging": false
+      }
+    ],
+    "edges": [
+      {
+        "id": "9f750aa0-fe70-4836-9c81-7ab67d61f17d->940e0ab9-239e-4dd7-8e0c-0789e7b7d92e_64bf634c-5d90-4c63-a29f-f6607d959117",
+        "type": "Relational",
+        "source": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
+        "targetHandle": "foreign-key-handle-64bf634c-5d90-4c63-a29f-f6607d959117",
+        "target": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "64bf634c-5d90-4c63-a29f-f6607d959117",
+            "sourceTableId": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
+            "columns": [
+              {
+                "id": "fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                "name": "DNI",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "9f750aa0-fe70-4836-9c81-7ab67d61f17d->4bf0090e-9fe5-4857-8ef0-a93a1d40fc12_d0cc361e-13d4-425d-896c-e37259fa5712",
+        "type": "Relational",
+        "source": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
+        "targetHandle": "foreign-key-handle-d0cc361e-13d4-425d-896c-e37259fa5712",
+        "target": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "d0cc361e-13d4-425d-896c-e37259fa5712",
+            "sourceTableId": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
+            "columns": [
+              {
+                "id": "fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                "name": "DNI",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e->298ac577-61d2-4d2b-80c4-05b660a5e293_5a357b83-91c7-43d0-a2f2-993e7ce4167e",
+        "type": "Relational",
+        "source": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+        "targetHandle": "foreign-key-handle-5a357b83-91c7-43d0-a2f2-993e7ce4167e",
+        "target": "298ac577-61d2-4d2b-80c4-05b660a5e293",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "5a357b83-91c7-43d0-a2f2-993e7ce4167e",
+            "sourceTableId": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+            "columns": [
+              {
+                "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                "name": "DNI",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e->15cbe045-c550-45cf-b4f1-8e03f2bb7c73_8556c60d-f824-473d-bbbf-8a60afc3246e",
+        "type": "Relational",
+        "source": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+        "targetHandle": "foreign-key-handle-8556c60d-f824-473d-bbbf-8a60afc3246e",
+        "target": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "8556c60d-f824-473d-bbbf-8a60afc3246e",
+            "sourceTableId": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
+            "columns": [
+              {
+                "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                "name": "DNI",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "66f11736-3bb3-4289-b7c2-1567f9a16d25->298ac577-61d2-4d2b-80c4-05b660a5e293_5565629b-6849-4c17-8ad6-81c0caf04440",
+        "type": "Relational",
+        "source": "66f11736-3bb3-4289-b7c2-1567f9a16d25",
+        "targetHandle": "foreign-key-handle-5565629b-6849-4c17-8ad6-81c0caf04440",
+        "target": "298ac577-61d2-4d2b-80c4-05b660a5e293",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "5565629b-6849-4c17-8ad6-81c0caf04440",
+            "sourceTableId": "66f11736-3bb3-4289-b7c2-1567f9a16d25",
+            "columns": [
+              {
+                "id": "fk_9dbd4b3d-3acd-4910-b9d0-da5faef919d5",
+                "name": "id_camilla",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "62f385f7-f8c8-4b11-8261-dbc3c5572589->298ac577-61d2-4d2b-80c4-05b660a5e293_955c31e6-48d3-4f37-90e2-f3abe6cf55ba",
+        "type": "Relational",
+        "source": "62f385f7-f8c8-4b11-8261-dbc3c5572589",
+        "targetHandle": "foreign-key-handle-955c31e6-48d3-4f37-90e2-f3abe6cf55ba",
+        "target": "298ac577-61d2-4d2b-80c4-05b660a5e293",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "955c31e6-48d3-4f37-90e2-f3abe6cf55ba",
+            "sourceTableId": "62f385f7-f8c8-4b11-8261-dbc3c5572589",
+            "columns": [
+              {
+                "id": "fk_3345f1c4-d281-4c85-b66d-ffea1f5f913a",
+                "name": "id_servicio",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12->d7ad1987-37aa-4d69-9e5f-9a0a74f60541_699d873d-a44a-4591-a65a-2903ee9f92a7",
+        "type": "Relational",
+        "source": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12",
+        "targetHandle": "foreign-key-handle-699d873d-a44a-4591-a65a-2903ee9f92a7",
+        "target": "d7ad1987-37aa-4d69-9e5f-9a0a74f60541",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "699d873d-a44a-4591-a65a-2903ee9f92a7",
+            "sourceTableId": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12",
+            "columns": [
+              {
+                "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
+                "name": "DNI",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "298ac577-61d2-4d2b-80c4-05b660a5e293->d7ad1987-37aa-4d69-9e5f-9a0a74f60541_8e3c928c-d3fc-4376-9431-13a5cfb6c490",
+        "type": "Relational",
+        "source": "298ac577-61d2-4d2b-80c4-05b660a5e293",
+        "targetHandle": "foreign-key-handle-8e3c928c-d3fc-4376-9431-13a5cfb6c490",
+        "target": "d7ad1987-37aa-4d69-9e5f-9a0a74f60541",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "8e3c928c-d3fc-4376-9431-13a5cfb6c490",
+            "sourceTableId": "298ac577-61d2-4d2b-80c4-05b660a5e293",
+            "columns": [
+              {
+                "id": "fk_a2aaf8ea-4328-456c-9a7d-f4be95500929",
+                "name": "id_turno",
+                "type": "INT"
+              }
+            ]
+          }
+        },
+        "selected": false
+      },
+      {
+        "id": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73->8f7a5c60-909b-4c6b-9327-505c03283f28_9fc2a0d0-95a3-4bfd-9fcb-43c865066ba2",
+        "type": "Relational",
+        "source": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73",
+        "targetHandle": "foreign-key-handle-9fc2a0d0-95a3-4bfd-9fcb-43c865066ba2",
+        "target": "8f7a5c60-909b-4c6b-9327-505c03283f28",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "9fc2a0d0-95a3-4bfd-9fcb-43c865066ba2",
+            "sourceTableId": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73",
+            "columns": [
+              {
+                "id": "fk_121d2b88-1780-4cfc-aa05-5f865b19e900",
+                "name": "id_venta",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "88513d3e-2993-40c3-84b2-cfde9f5a409a->8f7a5c60-909b-4c6b-9327-505c03283f28_1b058a0e-61f4-4126-9cb8-c61d5a5c68b6",
+        "type": "Relational",
+        "source": "88513d3e-2993-40c3-84b2-cfde9f5a409a",
+        "targetHandle": "foreign-key-handle-1b058a0e-61f4-4126-9cb8-c61d5a5c68b6",
+        "target": "8f7a5c60-909b-4c6b-9327-505c03283f28",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "1b058a0e-61f4-4126-9cb8-c61d5a5c68b6",
+            "sourceTableId": "88513d3e-2993-40c3-84b2-cfde9f5a409a",
+            "columns": [
+              {
+                "id": "fk_db3b3310-1e3c-47f3-9961-9de0a0f98659",
+                "name": "id_producto",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "viewport": {
+      "x": -106.33491118731217,
+      "y": 61.20811699038677,
+      "zoom": 0.5
+    }
+  },
+  "name": "Tabla-venus-rs",
+  "folder": {
+    "name": "Diagrams",
+    "folderType": 1,
+    "depth": 0,
+    "id": 381613
+  },
+  "id": 593634,
+  "updatedAtTimestamp": 1789516746
+}
