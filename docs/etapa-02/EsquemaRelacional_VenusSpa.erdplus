@@ -7,7 +7,7 @@
         "type": "Table",
         "position": {
           "x": -298.9373144455934,
-          "y": 0.43174608863199637
+          "y": 1.5913961141522215
         },
         "data": {
           "label": "PERSONA",
@@ -31,18 +31,18 @@
             {
               "id": "90a67c5f-3a4f-43fc-8723-8f0417583d1e",
               "name": "Telefono_persona",
-              "type": "INT",
+              "type": "VARCHAR(n)",
               "position": 0,
               "size": "30"
             }
           ],
-          "isSelected": false
+          "isSelected": true
         },
         "measured": {
           "width": 240,
           "height": 116
         },
-        "selected": false,
+        "selected": true,
         "dragging": false
       },
       {
@@ -107,8 +107,8 @@
         "id": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12",
         "type": "Table",
         "position": {
-          "x": -296.5072795351883,
-          "y": -147.8902703882247
+          "x": -289.5238421991221,
+          "y": -145.56245794286932
         },
         "data": {
           "label": "PROFESIONAL",
@@ -120,7 +120,8 @@
               "type": "DATE",
               "position": 0,
               "isOptional": false,
-              "isPrimaryKey": false
+              "isPrimaryKey": false,
+              "isUnique": false
             },
             {
               "id": "aae3a45d-be5f-4789-b3bf-75aac72a5fee",
@@ -129,7 +130,8 @@
               "position": 0,
               "size": "50",
               "isOptional": true,
-              "isPrimaryKey": false
+              "isPrimaryKey": false,
+              "isUnique": false
             },
             {
               "id": "fk_35b849d9-7e10-47dc-a9c0-1434e37301c7",
@@ -148,7 +150,8 @@
                 ]
               },
               "isPrimaryKey": true,
-              "isOptional": false
+              "isOptional": false,
+              "isUnique": true
             }
           ],
           "isSelected": false
@@ -164,8 +167,8 @@
         "id": "66f11736-3bb3-4289-b7c2-1567f9a16d25",
         "type": "Table",
         "position": {
-          "x": 368.55831807688133,
-          "y": 36.8795821364568
+          "x": 367.3944118542036,
+          "y": 38.04348835913449
         },
         "data": {
           "label": "CAMILLA",
@@ -216,20 +219,23 @@
               "type": "INT",
               "position": 0,
               "isPrimaryKey": true,
-              "isOptional": false
+              "isOptional": false,
+              "isUnique": true
             },
             {
               "id": "018d228a-a872-464d-bc63-1db39b72ffcd",
               "name": "Denominacion ",
               "type": "VARCHAR(n)",
               "position": 0,
-              "size": "150"
+              "size": "150",
+              "isUnique": false
             },
             {
               "id": "4de10705-a359-4d72-84f4-9431be4a9dcf",
               "name": "PrecioUnitario",
               "type": "FLOAT",
-              "position": 0
+              "position": 0,
+              "isUnique": false
             }
           ],
           "isSelected": false
@@ -258,26 +264,30 @@
               "type": "INT",
               "position": 0,
               "isPrimaryKey": true,
-              "isOptional": false
+              "isOptional": false,
+              "isUnique": true
             },
             {
               "id": "701e798b-09d3-4e82-b53a-4aa7978c81fa",
               "name": "NombreProducto",
               "type": "VARCHAR(n)",
               "position": 0,
-              "size": "150"
+              "size": "150",
+              "isUnique": false
             },
             {
               "id": "1d753912-15f8-481d-b4a8-bff1196d7991",
               "name": "PrecioVigente",
               "type": "FLOAT",
-              "position": 0
+              "position": 0,
+              "isUnique": false
             },
             {
               "id": "dad1733b-7739-412d-bb06-c8a4fdd1418e",
               "name": "Stock_disponible",
               "type": "INT",
-              "position": 0
+              "position": 0,
+              "isUnique": false
             }
           ],
           "isSelected": false
@@ -307,7 +317,7 @@
               "position": 0,
               "isPrimaryKey": true,
               "isOptional": false,
-              "isUnique": false
+              "isUnique": true
             },
             {
               "id": "e33308fe-7279-4fed-b2e8-7166add97db3",
@@ -422,7 +432,7 @@
           "width": 274,
           "height": 251
         },
-        "selected": true,
+        "selected": false,
         "dragging": false
       },
       {
@@ -442,20 +452,23 @@
               "type": "INT",
               "position": 0,
               "isPrimaryKey": true,
-              "isOptional": false
+              "isOptional": false,
+              "isUnique": true
             },
             {
               "id": "f8c2f35f-406a-4103-8373-eef820b47cf3",
               "name": "FechaVenta ",
               "type": "DATE",
-              "position": 0
+              "position": 0,
+              "isUnique": false
             },
             {
               "id": "fba3c30d-7b8a-4abd-907f-608f318a75ab",
               "name": "MetodoPagoVenta ",
               "type": "VARCHAR(n)",
               "position": 0,
-              "size": "50"
+              "size": "50",
+              "isUnique": false
             },
             {
               "id": "fk_068d1aaa-1792-466c-a01b-109335583ad9",
@@ -472,7 +485,8 @@
                     "type": "INT"
                   }
                 ]
-              }
+              },
+              "isUnique": false
             }
           ],
           "isSelected": false
@@ -488,7 +502,7 @@
         "id": "d7ad1987-37aa-4d69-9e5f-9a0a74f60541",
         "type": "Table",
         "position": {
-          "x": 14.802017321456916,
+          "x": 39.2440479976886,
           "y": -72.64001127049058
         },
         "data": {
@@ -559,14 +573,16 @@
               "name": "Cantidad ",
               "type": "INT",
               "position": 0,
-              "isPrimaryKey": false
+              "isPrimaryKey": false,
+              "isUnique": false
             },
             {
               "id": "3bfdde0f-5f4f-4ff4-bb29-f315c48987ce",
               "name": "Precio ",
               "type": "FLOAT",
               "position": 0,
-              "isPrimaryKey": false
+              "isPrimaryKey": false,
+              "isUnique": false
             },
             {
               "id": "fk_395c9d82-c8d3-474b-b4f2-25b2f7511a3d",
@@ -585,7 +601,8 @@
                 ]
               },
               "isPrimaryKey": true,
-              "isOptional": false
+              "isOptional": false,
+              "isUnique": true
             },
             {
               "id": "fk_066ab026-7434-4a71-8c52-6c46b5b9c2cd",
@@ -604,7 +621,8 @@
                 ]
               },
               "isPrimaryKey": true,
-              "isOptional": false
+              "isOptional": false,
+              "isUnique": true
             }
           ],
           "isSelected": false
@@ -851,9 +869,9 @@
       }
     ],
     "viewport": {
-      "x": 663.6664126868644,
-      "y": 193.16838052004522,
-      "zoom": 0.9100388240808991
+      "x": 664.3028625600859,
+      "y": 207.56120955682934,
+      "zoom": 0.862329132059815
     }
   },
   "name": "Tabla_Venus(cambio3)",
@@ -870,5 +888,5 @@
     "id": 434516
   },
   "id": 606146,
-  "updatedAtTimestamp": 1790015650
+  "updatedAtTimestamp": 1790016703
 }
