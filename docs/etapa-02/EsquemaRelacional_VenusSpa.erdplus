@@ -6,8 +6,8 @@
         "id": "9f750aa0-fe70-4836-9c81-7ab67d61f17d",
         "type": "Table",
         "position": {
-          "x": 623.3529982740957,
-          "y": -93.45712987433288
+          "x": -298.9373144455934,
+          "y": 0.43174608863199637
         },
         "data": {
           "label": "PERSONA",
@@ -40,7 +40,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 118
+          "height": 116
         },
         "selected": false,
         "dragging": false
@@ -49,8 +49,8 @@
         "id": "940e0ab9-239e-4dd7-8e0c-0789e7b7d92e",
         "type": "Table",
         "position": {
-          "x": 318.59493592578565,
-          "y": 7.8848335904210245
+          "x": -292.9652713484079,
+          "y": 185.80219080937576
         },
         "data": {
           "label": "CLIENTE",
@@ -98,7 +98,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 103
+          "height": 101
         },
         "selected": false,
         "dragging": false
@@ -107,8 +107,8 @@
         "id": "4bf0090e-9fe5-4857-8ef0-a93a1d40fc12",
         "type": "Table",
         "position": {
-          "x": 947.4682178856467,
-          "y": 8.182230300415085
+          "x": -296.5072795351883,
+          "y": -147.8902703882247
         },
         "data": {
           "label": "PROFESIONAL",
@@ -155,7 +155,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 103
+          "height": 101
         },
         "selected": false,
         "dragging": false
@@ -164,8 +164,8 @@
         "id": "66f11736-3bb3-4289-b7c2-1567f9a16d25",
         "type": "Table",
         "position": {
-          "x": 311.2750420797153,
-          "y": 428.40520658001185
+          "x": 368.55831807688133,
+          "y": 36.8795821364568
         },
         "data": {
           "label": "CAMILLA",
@@ -177,7 +177,8 @@
               "type": "INT",
               "position": 0,
               "isPrimaryKey": true,
-              "isOptional": false
+              "isOptional": false,
+              "isUnique": true
             },
             {
               "id": "1ac25cfe-cbb1-45ff-9d7c-714dbc3942d4",
@@ -185,7 +186,8 @@
               "type": "VARCHAR(n)",
               "position": 0,
               "size": "100",
-              "isPrimaryKey": false
+              "isPrimaryKey": false,
+              "isUnique": false
             }
           ],
           "isSelected": false
@@ -201,8 +203,8 @@
         "id": "62f385f7-f8c8-4b11-8261-dbc3c5572589",
         "type": "Table",
         "position": {
-          "x": 309.3265485907872,
-          "y": 561.6959624237533
+          "x": 379.20863629249436,
+          "y": 189.55724364025593
         },
         "data": {
           "label": "SERVICIOS",
@@ -234,7 +236,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 102
+          "height": 100
         },
         "selected": false,
         "dragging": false
@@ -243,8 +245,8 @@
         "id": "88513d3e-2993-40c3-84b2-cfde9f5a409a",
         "type": "Table",
         "position": {
-          "x": 1091.4571298743328,
-          "y": 674.0519232943211
+          "x": 387.9160653741954,
+          "y": 363.6769021685782
         },
         "data": {
           "label": "PRODUCTOS",
@@ -282,7 +284,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 127
+          "height": 125
         },
         "selected": false,
         "dragging": false
@@ -291,8 +293,8 @@
         "id": "298ac577-61d2-4d2b-80c4-05b660a5e293",
         "type": "Table",
         "position": {
-          "x": 305.882514874916,
-          "y": 139.0457391513251
+          "x": 15.180558577881328,
+          "y": 48.992257335395905
         },
         "data": {
           "label": "TURNO",
@@ -305,14 +307,18 @@
               "position": 0,
               "isPrimaryKey": true,
               "isOptional": false,
-              "isUnique": true
+              "isUnique": false
             },
             {
               "id": "e33308fe-7279-4fed-b2e8-7166add97db3",
               "name": "FechaTurno ",
               "type": "DATE",
               "position": 0,
-              "isUnique": false
+              "isUnique": false,
+              "groupNumbers": [
+                1,
+                2
+              ]
             },
             {
               "id": "c2f26c20-f411-4591-8811-261ca25c2f7c",
@@ -320,7 +326,11 @@
               "type": "VARCHAR(n)",
               "position": 0,
               "size": "50",
-              "isUnique": false
+              "isUnique": false,
+              "groupNumbers": [
+                1,
+                2
+              ]
             },
             {
               "id": "cc950e3a-8cbe-474d-a529-61110195c7f7",
@@ -354,7 +364,10 @@
                   }
                 ]
               },
-              "isUnique": true
+              "isUnique": false,
+              "groupNumbers": [
+                1
+              ]
             },
             {
               "id": "fk_30b42888-e17c-46a8-a334-6255184f48c4",
@@ -372,7 +385,10 @@
                   }
                 ]
               },
-              "isUnique": true
+              "isUnique": false,
+              "groupNumbers": [
+                2
+              ]
             },
             {
               "id": "fk_adec8b1c-e09a-446d-9325-aa9998939fb0",
@@ -390,30 +406,31 @@
                   }
                 ]
               },
-              "isUnique": true
+              "isUnique": false
             },
             {
               "id": "3390336b-0cfe-432c-8094-ee3b2fa24b21",
               "name": "Precio_historico",
               "type": "FLOAT",
-              "position": 0
+              "position": 0,
+              "isUnique": false
             }
           ],
           "isSelected": false
         },
         "measured": {
-          "width": 240,
-          "height": 253
+          "width": 274,
+          "height": 251
         },
-        "selected": false,
+        "selected": true,
         "dragging": false
       },
       {
         "id": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73",
         "type": "Table",
         "position": {
-          "x": 635.7583473599051,
-          "y": 678.3419634647539
+          "x": -302.75683735407694,
+          "y": 362.4908421195787
         },
         "data": {
           "label": "VENTAS",
@@ -451,7 +468,7 @@
                 "columns": [
                   {
                     "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
-                    "name": "DNI",
+                    "name": "DNI_cliente",
                     "type": "INT"
                   }
                 ]
@@ -462,7 +479,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 128
+          "height": 126
         },
         "selected": false,
         "dragging": false
@@ -471,8 +488,8 @@
         "id": "d7ad1987-37aa-4d69-9e5f-9a0a74f60541",
         "type": "Table",
         "position": {
-          "x": 922.5872943746293,
-          "y": 191.30489575535285
+          "x": 14.802017321456916,
+          "y": -72.64001127049058
         },
         "data": {
           "label": "SE ASIGNA_TURNO",
@@ -521,7 +538,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 79
+          "height": 77
         },
         "selected": false,
         "dragging": false
@@ -530,8 +547,8 @@
         "id": "8f7a5c60-909b-4c6b-9327-505c03283f28",
         "type": "Table",
         "position": {
-          "x": 854.6692138503854,
-          "y": 512.7249579202846
+          "x": 51.22548539637373,
+          "y": 361.5841859714942
         },
         "data": {
           "label": "CONTIENE ",
@@ -594,7 +611,7 @@
         },
         "measured": {
           "width": 240,
-          "height": 128
+          "height": 126
         },
         "selected": false,
         "dragging": false
@@ -783,7 +800,8 @@
               }
             ]
           }
-        }
+        },
+        "selected": false
       },
       {
         "id": "15cbe045-c550-45cf-b4f1-8e03f2bb7c73->8f7a5c60-909b-4c6b-9327-505c03283f28_9fc2a0d0-95a3-4bfd-9fcb-43c865066ba2",
@@ -833,18 +851,24 @@
       }
     ],
     "viewport": {
-      "x": -186.56037937277927,
-      "y": 166.1330533218577,
-      "zoom": 0.6575880989357903
+      "x": 663.6664126868644,
+      "y": 193.16838052004522,
+      "zoom": 0.9100388240808991
     }
   },
-  "name": "venus-rs",
+  "name": "Tabla_Venus(cambio3)",
   "folder": {
-    "name": "Diagrams",
-    "folderType": 1,
-    "depth": 0,
-    "id": 382112
+    "name": "venusSpa",
+    "folderType": 2,
+    "parentFolder": {
+      "depth": 0,
+      "id": 385004,
+      "name": "Diagrams",
+      "folderType": 1
+    },
+    "depth": 1,
+    "id": 434516
   },
-  "id": 593542,
-  "updatedAtTimestamp": 1789514064
+  "id": 606146,
+  "updatedAtTimestamp": 1790015650
 }
