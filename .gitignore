@@ -1,0 +1,9 @@
+# Prohibido subir material de cátedra local
+material sql/
+"material sql"/
+*.pdf
+
+# Archivos temporales del sistema / IDE
+.DS_Store
+Thumbs.db
+*.tmp
