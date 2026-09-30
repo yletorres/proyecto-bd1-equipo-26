@@ -10,14 +10,14 @@
 ## PROFESIONAL
 | Atributo | Tipo | Clave |
 |---|---|---|
-| **DNI_persona** | INT | PK, FK → PERSONA |
+| **DNI_profesional** | INT | PK, FK → PERSONA |
 | FechaDeIngreso | DATE | |
 | Matricula | VARCHAR(50) | (O) |
 
 ## CLIENTE
 | Atributo | Tipo | Clave |
 |---|---|---|
-| **DNI_persona** | INT | PK, FK → PERSONA |
+| **DNI_cliente** | INT | PK, FK → PERSONA |
 | Direccion | VARCHAR(200) | |
 | FechaDeNacimiento | DATE | |
 
@@ -27,12 +27,12 @@
 | **id_camilla** | INT | PK |
 | Nombre | VARCHAR(100) | |
 
-## SERVICIOS
+## SERVICIO
 | Atributo | Tipo | Clave |
 |---|---|---|
 | **id_servicio** | INT | PK |
 | Denominacion | VARCHAR(150) | |
-| PrecioUnitario | FLOAT | |
+| PrecioUnitario | DECIMAL(10,2) | |
 
 ## TURNO
 | Atributo | Tipo | Clave |
@@ -42,18 +42,18 @@
 | FranjaHoraria | VARCHAR(50) | Ugroup1, Ugroup2 |
 | Estado | VARCHAR(20) | |
 | MetodoPagoTurno | VARCHAR(50) | |
-| Precio_historico | FLOAT | |
-| DNI_persona | INT | FK → CLIENTE, Ugroup1 |
+| Precio_historico | DECIMAL(10,2) | |
+| DNI_cliente | INT | FK → CLIENTE, Ugroup1 |
 | Id_camilla | INT | FK → CAMILLA, Ugroup2 |
-| Id_servicio | INT | FK → SERVICIOS |
+| Id_servicio | INT | FK → SERVICIO |
 
 ## SE_ASIGNA_TURNO
 | Atributo | Tipo | Clave |
 |---|---|---|
-| **DNI_persona** | INT | PK, FK → PROFESIONAL |
+| **DNI_profesional** | INT | PK, FK → PROFESIONAL |
 | **id_turno** | INT | PK, FK → TURNO |
 
-## VENTAS
+## VENTA
 | Atributo | Tipo | Clave |
 |---|---|---|
 | **id_venta** | INT | PK |
@@ -61,34 +61,34 @@
 | MetodoPagoVenta | VARCHAR(50) | |
 | DNI_cliente | INT | FK → CLIENTE |
 
-## PRODUCTOS
+## PRODUCTO
 | Atributo | Tipo | Clave |
 |---|---|---|
 | **Id_producto** | INT | PK |
 | NombreProducto | VARCHAR(150) | |
-| PrecioVigente | FLOAT | |
+| PrecioVigente | DECIMAL(10,2) | |
 | Stock_disponible | INT | |
 
 ## CONTIENE
 | Atributo | Tipo | Clave |
 |---|---|---|
-| **Id_venta** | INT | PK, FK → VENTAS |
-| **Id_producto** | INT | PK, FK → PRODUCTOS |
+| **Id_venta** | INT | PK, FK → VENTA |
+| **Id_producto** | INT | PK, FK → PRODUCTO |
 | Cantidad | INT | |
-| Precio | FLOAT | |
+| Precio | DECIMAL(10,2) | |
 
 ## Claves foráneas
-- PROFESIONAL(DNI_persona) → PERSONA(DNI_persona)
-- CLIENTE(DNI_persona) → PERSONA(DNI_persona)
-- TURNO(DNI_persona) → CLIENTE(DNI_persona)
+- PROFESIONAL(DNI_profesional) → PERSONA(DNI_persona)
+- CLIENTE(DNI_cliente) → PERSONA(DNI_persona)
+- TURNO(DNI_cliente) → CLIENTE(DNI_cliente)
 - TURNO(Id_camilla) → CAMILLA(id_camilla)
-- TURNO(Id_servicio) → SERVICIOS(id_servicio)
-- SE_ASIGNA_TURNO(DNI_persona) → PROFESIONAL(DNI_persona)
+- TURNO(Id_servicio) → SERVICIO(id_servicio)
+- SE_ASIGNA_TURNO(DNI_profesional) → PROFESIONAL(DNI_profesional)
 - SE_ASIGNA_TURNO(id_turno) → TURNO(Id_turno)
-- VENTAS(DNI_cliente) → CLIENTE(DNI_persona)
-- CONTIENE(Id_venta) → VENTAS(id_venta)
-- CONTIENE(Id_producto) → PRODUCTOS(Id_producto)
+- VENTA(DNI_cliente) → CLIENTE(DNI_cliente)
+- CONTIENE(Id_venta) → VENTA(id_venta)
+- CONTIENE(Id_producto) → PRODUCTO(Id_producto)
 
 ## Restricciones únicas (UNIQUE)
-- **Ugroup1:** (FechaTurno, FranjaHoraria, DNI_persona)
+- **Ugroup1:** (FechaTurno, FranjaHoraria, DNI_cliente)
 - **Ugroup2:** (FechaTurno, FranjaHoraria, Id_camilla)
