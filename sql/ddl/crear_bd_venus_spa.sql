@@ -1,4 +1,3 @@
-```sql
 -- =============================================================================
 -- Cátedra: Bases de Datos I - Lic. en Sistemas de Información (FaCENA - UNNE)
 -- Proyecto: Venus Spa - Etapa III (Implementación Física)
@@ -315,4 +314,3 @@ CREATE TABLE contiene (
         CHECK (precio > 0)
 );
 GO
-```
