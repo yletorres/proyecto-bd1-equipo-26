@@ -15,7 +15,7 @@
           "columns": [
             {
               "id": "eb64c82d-9462-4406-88f4-6c0badd4a32d",
-              "name": "DNI_cliente",
+              "name": "DNI_persona",
               "type": "INT",
               "position": 0,
               "isPrimaryKey": true,
@@ -84,7 +84,7 @@
                 "columns": [
                   {
                     "id": "fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
-                    "name": "DNI_persona",
+                    "name": "DNI_cliente",
                     "type": "INT"
                   }
                 ]
@@ -206,7 +206,7 @@
         "id": "62f385f7-f8c8-4b11-8261-dbc3c5572589",
         "type": "Table",
         "position": {
-          "x": 362.2358405726043,
+          "x": 352.9613619219018,
           "y": 208.52683885660372
         },
         "data": {
@@ -303,8 +303,8 @@
         "id": "298ac577-61d2-4d2b-80c4-05b660a5e293",
         "type": "Table",
         "position": {
-          "x": 15.180558577881328,
-          "y": 48.992257335395905
+          "x": 10.543319252530083,
+          "y": 24.646750877301898
         },
         "data": {
           "label": "TURNO",
@@ -369,7 +369,7 @@
                 "columns": [
                   {
                     "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
-                    "name": "DNI_persona",
+                    "name": "DNI_cliente",
                     "type": "INT"
                   }
                 ]
@@ -502,11 +502,11 @@
         "id": "d7ad1987-37aa-4d69-9e5f-9a0a74f60541",
         "type": "Table",
         "position": {
-          "x": 39.2440479976886,
-          "y": -72.64001127049058
+          "x": 11.420612045581166,
+          "y": -94.66689806590895
         },
         "data": {
-          "label": "SE ASIGNA_TURNO",
+          "label": "SE_ASIGNA_TURNO",
           "isConnectable": false,
           "columns": [
             {
@@ -520,7 +520,7 @@
                 "columns": [
                   {
                     "id": "fk_fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
-                    "name": "DNI_persona",
+                    "name": "DNI_profesional",
                     "type": "INT"
                   }
                 ]
@@ -548,21 +548,21 @@
               "isOptional": false
             }
           ],
-          "isSelected": false
+          "isSelected": true
         },
         "measured": {
           "width": 240,
           "height": 77
         },
-        "selected": false,
+        "selected": true,
         "dragging": false
       },
       {
         "id": "8f7a5c60-909b-4c6b-9327-505c03283f28",
         "type": "Table",
         "position": {
-          "x": 28.262291187110662,
-          "y": 357.5905869785789
+          "x": 16.66919287373257,
+          "y": 341.3602493398496
         },
         "data": {
           "label": "CONTIENE ",
@@ -869,7 +869,7 @@
       }
     ],
     "viewport": {
-      "x": 675.337374477823,
+      "x": 676.557335970329,
       "y": 207.59804363472873,
       "zoom": 0.8625821786105528
     }
@@ -888,5 +888,5 @@
     "id": 434516
   },
   "id": 606146,
-  "updatedAtTimestamp": 1790812802
+  "updatedAtTimestamp": 1790813415
 }
