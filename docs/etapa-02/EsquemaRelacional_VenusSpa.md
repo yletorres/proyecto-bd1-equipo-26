@@ -39,7 +39,7 @@
 |---|---|---|
 | **Id_turno** | INT | PK |
 | FechaTurno | DATE | Ugroup1, Ugroup2 |
-| FranjaHoraria | VARCHAR(50) | Ugroup1, Ugroup2 |
+| FranjaHoraria | TIME(0) | Ugroup1, Ugroup2 |
 | Estado | VARCHAR(20) | |
 | MetodoPagoTurno | VARCHAR(50) | |
 | Precio_historico | DECIMAL(10,2) | |
