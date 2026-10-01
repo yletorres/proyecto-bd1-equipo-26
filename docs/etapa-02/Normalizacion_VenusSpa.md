@@ -18,15 +18,15 @@ Por eso, en esta documentación no se muestra una "evolución" de tablas interme
 | Relación | Clave primaria | Claves foráneas | Otras claves candidatas |
 |---|---|---|---|
 | PERSONA | DNI_persona | – | – |
-| PROFESIONAL | DNI_persona | DNI_persona → PERSONA | – |
-| CLIENTE | DNI_persona | DNI_persona → PERSONA | – |
+| PROFESIONAL | DNI_profesional | DNI_profesional → PERSONA | – |
+| CLIENTE | DNI_cliente | DNI_cliente → PERSONA | – |
 | CAMILLA | id_camilla | – | – |
-| SERVICIOS | id_servicio | – | – |
-| TURNO | Id_turno | DNI_persona → CLIENTE, Id_camilla → CAMILLA, Id_servicio → SERVICIOS | (FechaTurno, FranjaHoraria, DNI_persona) y (FechaTurno, FranjaHoraria, Id_camilla) |
-| SE_ASIGNA_TURNO | (DNI_persona, id_turno) | DNI_persona → PROFESIONAL, id_turno → TURNO | – |
-| VENTAS | id_venta | DNI_cliente → CLIENTE | – |
-| PRODUCTOS | Id_producto | – | – |
-| CONTIENE | (Id_venta, Id_producto) | Id_venta → VENTAS, Id_producto → PRODUCTOS | – |
+| SERVICIO | id_servicio | – | – |
+| TURNO | Id_turno | DNI_cliente → CLIENTE, Id_camilla → CAMILLA, Id_servicio → SERVICIO | (FechaTurno, FranjaHoraria, DNI_cliente) y (FechaTurno, FranjaHoraria, Id_camilla) |
+| SE_ASIGNA_TURNO | (DNI_profesional, id_turno) | DNI_profesional → PROFESIONAL, id_turno → TURNO | – |
+| VENTA | id_venta | DNI_cliente → CLIENTE | – |
+| PRODUCTO | Id_producto | – | – |
+| CONTIENE | (Id_venta, Id_producto) | Id_venta → VENTA, Id_producto → PRODUCTO | – |
 
 ---
 
@@ -47,12 +47,12 @@ Por eso, en esta documentación no se muestra una "evolución" de tablas interme
 ### 3.3 Sin dependencias transitivas (3FN)
 Se separaron en tablas propias las entidades cuyos datos dependerían de otro atributo no clave si estuvieran juntas:
 
-- **PERSONA** guarda los datos comunes (nombre, teléfono) una sola vez. **CLIENTE** y **PROFESIONAL** son especializaciones que heredan la clave (`DNI_persona`) y solo contienen sus atributos específicos. Así, nombre y teléfono no se repiten ni dependen transitivamente del rol.
-- **SERVICIOS**, **CAMILLA** y **PRODUCTOS** son catálogos independientes. `TURNO` solo guarda la referencia (`Id_servicio`, `Id_camilla`), no los datos descriptivos del servicio o la camilla.
-- **VENTAS** referencia a **CLIENTE** por `DNI_cliente`, sin duplicar datos del cliente.
+- **PERSONA** guarda los datos comunes (nombre, teléfono) una sola vez. **CLIENTE** y **PROFESIONAL** son especializaciones **parciales y superpuestas** de PERSONA: una misma persona puede ser cliente, profesional o ambos (RN.01). Cada una toma su clave de PERSONA (`DNI_persona`) y la nombra según su rol (`DNI_cliente`, `DNI_profesional`), y solo contiene sus atributos específicos. Así, nombre y teléfono no se repiten ni dependen transitivamente del rol.
+- **SERVICIO**, **CAMILLA** y **PRODUCTO** son catálogos independientes. `TURNO` solo guarda la referencia (`Id_servicio`, `Id_camilla`), no los datos descriptivos del servicio o la camilla.
+- **VENTA** referencia a **CLIENTE** por `DNI_cliente`, sin duplicar datos del cliente.
 
 ### 3.4 Precios históricos: redundancia aparente, no real
-`Precio_historico` (en TURNO) y `Precio` (en CONTIENE) parecen repetir `PrecioUnitario` (SERVICIOS) y `PrecioVigente` (PRODUCTOS), pero **no son dependencias transitivas**:
+`Precio_historico` (en TURNO) y `Precio` (en CONTIENE) parecen repetir `PrecioUnitario` (SERVICIO) y `PrecioVigente` (PRODUCTO), pero **no son dependencias transitivas**:
 
 - `PrecioUnitario` y `PrecioVigente` reflejan el precio **actual** y pueden cambiar.
 - `Precio_historico` y `Precio` guardan el precio **congelado al momento del turno o la venta**.
@@ -72,7 +72,7 @@ Se separaron en tablas propias las entidades cuyos datos dependerían de otro at
 ### 4.2 Segunda Forma Normal (2FN)
 | Relación | ¿Clave compuesta? | Resultado |
 |---|---|---|
-| PERSONA, PROFESIONAL, CLIENTE, CAMILLA, SERVICIOS, TURNO, VENTAS, PRODUCTOS | No (clave simple) | ✔ 2FN se cumple automáticamente |
+| PERSONA, PROFESIONAL, CLIENTE, CAMILLA, SERVICIO, TURNO, VENTA, PRODUCTO | No (clave simple) | ✔ 2FN se cumple automáticamente |
 | SE_ASIGNA_TURNO | Sí | ✔ Solo tiene atributos de clave |
 | CONTIENE | Sí | ✔ `Cantidad` y `Precio` dependen de (`Id_venta`, `Id_producto`) completa |
 
@@ -82,14 +82,14 @@ Dependencias funcionales de cada relación (los determinantes son siempre superc
 | Relación | Dependencias funcionales | ¿Determinante superclave? |
 |---|---|---|
 | PERSONA | DNI_persona → NombreCompleto_persona, Telefono_persona | ✔ |
-| PROFESIONAL | DNI_persona → FechaDeIngreso, Matricula | ✔ |
-| CLIENTE | DNI_persona → Direccion, FechaDeNacimiento | ✔ |
+| PROFESIONAL | DNI_profesional → FechaDeIngreso, Matricula | ✔ |
+| CLIENTE | DNI_cliente → Direccion, FechaDeNacimiento | ✔ |
 | CAMILLA | id_camilla → Nombre | ✔ |
-| SERVICIOS | id_servicio → Denominacion, PrecioUnitario | ✔ |
-| TURNO | Id_turno → todos los atributos. (FechaTurno, FranjaHoraria, DNI_persona) → Id_turno y demás. (FechaTurno, FranjaHoraria, Id_camilla) → Id_turno y demás | ✔ (las tres son superclaves) |
-| SE_ASIGNA_TURNO | (DNI_persona, id_turno) → (sin atributos no clave) | ✔ |
-| VENTAS | id_venta → FechaVenta, MetodoPagoVenta, DNI_cliente | ✔ |
-| PRODUCTOS | Id_producto → NombreProducto, PrecioVigente, Stock_disponible | ✔ |
+| SERVICIO | id_servicio → Denominacion, PrecioUnitario | ✔ |
+| TURNO | Id_turno → todos los atributos. (FechaTurno, FranjaHoraria, DNI_cliente) → Id_turno y demás. (FechaTurno, FranjaHoraria, Id_camilla) → Id_turno y demás | ✔ (las tres son superclaves) |
+| SE_ASIGNA_TURNO | (DNI_profesional, id_turno) → (sin atributos no clave) | ✔ |
+| VENTA | id_venta → FechaVenta, MetodoPagoVenta, DNI_cliente | ✔ |
+| PRODUCTO | Id_producto → NombreProducto, PrecioVigente, Stock_disponible | ✔ |
 | CONTIENE | (Id_venta, Id_producto) → Cantidad, Precio | ✔ |
 
 Ningún atributo no clave depende de otro atributo no clave, por lo tanto **no existen dependencias transitivas**.

@@ -269,7 +269,7 @@
           "y": 213.4201234836731
         },
         "data": {
-          "label": "Productos",
+          "label": "Producto",
           "type": "Regular",
           "isConnectable": false,
           "isSelected": false
@@ -371,7 +371,7 @@
         "id": "259b25ed-2a19-4674-8ee5-5c220de0ef2d",
         "type": "Entity",
         "position": {
-          "x": -333.59568851171315,
+          "x": -305.37723153966795,
           "y": 53.676165924763154
         },
         "data": {
@@ -384,7 +384,7 @@
           "width": 100,
           "height": 50
         },
-        "selected": false,
+        "selected": true,
         "dragging": false
       },
       {
@@ -566,7 +566,7 @@
           "y": -89.00084820790016
         },
         "data": {
-          "label": "Ventas",
+          "label": "Venta",
           "type": "Regular",
           "isConnectable": false,
           "isSelected": false
@@ -972,7 +972,8 @@
           "isConnectable": false,
           "type": "Regular",
           "parentId": "ac7444c1-d7d5-4942-934e-02c164345395",
-          "isSelected": true
+          "isSelected": true,
+          "supertypeDefinition": "Overlapping"
         }
       },
       {
@@ -1270,18 +1271,24 @@
       }
     ],
     "viewport": {
-      "x": 291.31831389628235,
-      "y": 345.3422835572404,
-      "zoom": 0.5
+      "x": 545.8958826071947,
+      "y": 328.7596645596788,
+      "zoom": 1.0290328180208261
     }
   },
   "name": "Venus-Spa",
   "folder": {
-    "name": "Diagrams",
-    "folderType": 1,
-    "depth": 0,
-    "id": 385004
+    "name": "venusSpa",
+    "folderType": 2,
+    "parentFolder": {
+      "depth": 0,
+      "id": 385004,
+      "name": "Diagrams",
+      "folderType": 1
+    },
+    "depth": 1,
+    "id": 434516
   },
-  "id": 592450,
-  "updatedAtTimestamp": 1789498232
+  "id": 606156,
+  "updatedAtTimestamp": 1790812390
 }

@@ -15,7 +15,7 @@
           "columns": [
             {
               "id": "eb64c82d-9462-4406-88f4-6c0badd4a32d",
-              "name": "DNI_persona",
+              "name": "DNI_cliente",
               "type": "INT",
               "position": 0,
               "isPrimaryKey": true,
@@ -36,13 +36,13 @@
               "size": "30"
             }
           ],
-          "isSelected": true
+          "isSelected": false
         },
         "measured": {
           "width": 240,
           "height": 116
         },
-        "selected": true,
+        "selected": false,
         "dragging": false
       },
       {
@@ -144,7 +144,7 @@
                 "columns": [
                   {
                     "id": "fk_eb64c82d-9462-4406-88f4-6c0badd4a32d",
-                    "name": "DNI_persona",
+                    "name": "DNI_profesional",
                     "type": "INT"
                   }
                 ]
@@ -167,8 +167,8 @@
         "id": "66f11736-3bb3-4289-b7c2-1567f9a16d25",
         "type": "Table",
         "position": {
-          "x": 367.3944118542036,
-          "y": 38.04348835913449
+          "x": 359.407213868373,
+          "y": 34.04988936621918
         },
         "data": {
           "label": "CAMILLA",
@@ -206,11 +206,11 @@
         "id": "62f385f7-f8c8-4b11-8261-dbc3c5572589",
         "type": "Table",
         "position": {
-          "x": 379.20863629249436,
-          "y": 189.55724364025593
+          "x": 362.2358405726043,
+          "y": 208.52683885660372
         },
         "data": {
-          "label": "SERVICIOS",
+          "label": "SERVICIO",
           "isConnectable": false,
           "columns": [
             {
@@ -251,11 +251,11 @@
         "id": "88513d3e-2993-40c3-84b2-cfde9f5a409a",
         "type": "Table",
         "position": {
-          "x": 387.9160653741954,
-          "y": 363.6769021685782
+          "x": 347.98007544504225,
+          "y": 361.68010267212054
         },
         "data": {
-          "label": "PRODUCTOS",
+          "label": "PRODUCTO",
           "isConnectable": false,
           "columns": [
             {
@@ -443,7 +443,7 @@
           "y": 362.4908421195787
         },
         "data": {
-          "label": "VENTAS",
+          "label": "VENTA",
           "isConnectable": false,
           "columns": [
             {
@@ -561,8 +561,8 @@
         "id": "8f7a5c60-909b-4c6b-9327-505c03283f28",
         "type": "Table",
         "position": {
-          "x": 51.22548539637373,
-          "y": 361.5841859714942
+          "x": 28.262291187110662,
+          "y": 357.5905869785789
         },
         "data": {
           "label": "CONTIENE ",
@@ -869,9 +869,9 @@
       }
     ],
     "viewport": {
-      "x": 664.3028625600859,
-      "y": 207.56120955682934,
-      "zoom": 0.862329132059815
+      "x": 675.337374477823,
+      "y": 207.59804363472873,
+      "zoom": 0.8625821786105528
     }
   },
   "name": "Tabla_Venus(cambio3)",
@@ -888,5 +888,5 @@
     "id": 434516
   },
   "id": 606146,
-  "updatedAtTimestamp": 1790016703
+  "updatedAtTimestamp": 1790812802
 }
