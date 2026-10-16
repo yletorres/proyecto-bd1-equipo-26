@@ -146,3 +146,34 @@ HAVING COUNT(*) = (
 ORDER BY
     persona.nombre_completo;
 GO
+
+-- -----------------------------------------------------------------------------
+-- 3.2 Cumpleañeros del mes
+-- La recepcionista necesita identificar a los clientes que cumplen
+-- años durante el mes actual y que hayan realizado compras.
+-- Esto permite ofrecerles descuentos como estrategia de fidelización.
+-- Se relacionan tres tablas y se utiliza HAVING para filtrar
+-- a los clientes que realizaron al menos una compra.
+-- -----------------------------------------------------------------------------
+
+SELECT
+    persona.nombre_completo AS cliente,
+    persona.telefono_persona AS telefono,
+    cliente.fecha_nacimiento AS fecha_nacimiento,
+    COUNT(venta.id_venta) AS cantidad_compras,
+    MAX(venta.fecha_venta) AS ultima_compra
+FROM persona
+JOIN cliente
+    ON persona.dni_persona = cliente.dni_cliente
+LEFT JOIN venta
+    ON venta.dni_cliente = cliente.dni_cliente
+WHERE MONTH(cliente.fecha_nacimiento) = MONTH(GETDATE())
+GROUP BY
+    persona.dni_persona,
+    persona.nombre_completo,
+    persona.telefono_persona,
+    cliente.fecha_nacimiento
+HAVING COUNT(venta.id_venta) >= 1
+ORDER BY
+    DAY(cliente.fecha_nacimiento);
+GO
