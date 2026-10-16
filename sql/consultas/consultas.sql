@@ -56,3 +56,27 @@ WHERE c.id_venta = 1
 GROUP BY c.id_venta;
 GO
  
+---------------------------------------------------------------------------------
+-- 2 Reportes Agregados -
+---------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------
+--Reporte Agregado de Productos más vendidos
+--Productos que mas se venden más en el mes
+--Realizada por el dueño
+---------------------------------------------------------------
+SELECT
+    p.id_producto,
+    p.nombre_producto,
+    SUM(c.cantidad) AS unidades_vendidas,
+    SUM(c.cantidad * c.precio) AS total_recaudado
+FROM producto p
+JOIN contiene c ON c.id_producto = p.id_producto
+JOIN venta v ON v.id_venta = c.id_venta
+GROUP BY
+    p.id_producto,
+    p.nombre_producto
+ORDER BY
+    unidades_vendidas DESC;
+GO
