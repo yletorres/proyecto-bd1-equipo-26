@@ -94,29 +94,33 @@ GO
 -- -----------------------------------------------------------------------------
 
 SELECT
-    p.nombre_completo AS profesional,
+    persona.nombre_completo AS profesional,
     COUNT(*) AS turnos_realizados
-FROM persona p
-JOIN profesional pr ON pr.dni_profesional = p.dni_persona
-JOIN se_asigna_turno sat ON sat.dni_profesional = pr.dni_profesional
-JOIN turno t ON t.id_turno = sat.id_turno
-WHERE t.estado = 'realizado'
-    AND t.fecha_turno >= '2026-09-01'
-    AND t.fecha_turno < '2026-10-01'
+FROM persona
+JOIN profesional
+    ON profesional.dni_profesional = persona.dni_persona
+JOIN se_asigna_turno
+    ON se_asigna_turno.dni_profesional = profesional.dni_profesional
+JOIN turno
+    ON turno.id_turno = se_asigna_turno.id_turno
+WHERE turno.estado = 'realizado'
+    AND turno.fecha_turno >= '2026-09-01'
+    AND turno.fecha_turno < '2026-10-01'
 GROUP BY
-    p.dni_persona,
-    p.nombre_completo
+    persona.dni_persona,
+    persona.nombre_completo
 HAVING COUNT(*) = (
     SELECT TOP (1)
         COUNT(*)
-    FROM se_asigna_turno sat2
-    JOIN turno t2 ON t2.id_turno = sat2.id_turno
-    WHERE t2.estado = 'realizado'
-        AND t2.fecha_turno >= '2026-09-01'
-        AND t2.fecha_turno < '2026-10-01'
-    GROUP BY sat2.dni_profesional
+    FROM se_asigna_turno
+    JOIN turno
+        ON turno.id_turno = se_asigna_turno.id_turno
+    WHERE turno.estado = 'realizado'
+        AND turno.fecha_turno >= '2026-09-01'
+        AND turno.fecha_turno < '2026-10-01'
+    GROUP BY se_asigna_turno.dni_profesional
     ORDER BY COUNT(*) DESC
 )
 ORDER BY
-    p.nombre_completo;
+    persona.nombre_completo;
 GO
