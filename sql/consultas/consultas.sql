@@ -62,7 +62,7 @@ GO
 
 ---------------------------------------------------------------
 --Reporte Agregado de Productos más vendidos
---Productos que mas se venden más en el mes
+--Ranking general de productos con más unidades vendidas
 --Realizada por el dueño
 ---------------------------------------------------------------
 SELECT
@@ -200,10 +200,71 @@ ORDER BY
     DAY(cliente.fecha_nacimiento);
 GO
 
+-- -----------------------------------------------------------------------------
+-- 3.3 Clientes frecuentes
+-- El dueño quiere ver a los clientes que más vienen al spa (al menos 4 turnos
+-- realizados y más de $60.000 gastados) para darles un descuento por fidelidad.
+-- Se relacionan las tablas persona, cliente y turno.
+-- Se agrupa por cliente y se usa HAVING para filtrar por cantidad y gasto.
+-- -----------------------------------------------------------------------------
 
+SELECT
+    p.dni_persona            AS dni,
+    p.nombre_completo        AS cliente,
+    p.telefono_persona       AS telefono,
+    COUNT(t.id_turno)        AS turnos_realizados,
+    SUM(t.precio_historico)  AS total_gastado,
+    MAX(t.fecha_turno)       AS ultimo_turno
+FROM persona p
+JOIN cliente c
+    ON c.dni_cliente = p.dni_persona
+JOIN turno t
+    ON t.dni_cliente = c.dni_cliente
+WHERE t.estado = 'realizado'
+GROUP BY
+    p.dni_persona,
+    p.nombre_completo,
+    p.telefono_persona
+HAVING COUNT(t.id_turno) >= 4
+    AND SUM(t.precio_historico) >= 60000.00
+ORDER BY
+    total_gastado DESC;
+GO
 
+-- -----------------------------------------------------------------------------
+-- 3.4 Servicio con mayor recaudación
+-- El dueño quiere identificar el servicio que más dinero generó con turnos
+-- realizados, para planificar la compra de insumos y disponibilidad de camillas.
+-- Se relacionan las tablas servicio, turno y camilla.
+-- Se agrupa por servicio y se usa una subconsulta con HAVING para traer el
+-- servicio con más ingresos (y contempla empates si los hubiera).
+-- -----------------------------------------------------------------------------
 
-
+SELECT
+    s.id_servicio,
+    s.denominacion           AS servicio,
+    COUNT(t.id_turno)        AS turnos_realizados,
+    SUM(t.precio_historico)  AS total_recaudado
+FROM servicio s
+JOIN turno t
+    ON s.id_servicio = t.id_servicio
+JOIN camilla c
+    ON c.id_camilla = t.id_camilla
+WHERE t.estado = 'realizado'
+GROUP BY
+    s.id_servicio,
+    s.denominacion
+HAVING SUM(t.precio_historico) = (
+    SELECT TOP (1)
+        SUM(t2.precio_historico)
+    FROM turno t2
+    WHERE t2.estado = 'realizado'
+    GROUP BY t2.id_servicio
+    ORDER BY SUM(t2.precio_historico) DESC
+)
+ORDER BY
+    total_recaudado DESC;
+GO
 
 -- ============================================================================
 -- CASO DE USO 4: Detección de Camillas Libres
@@ -229,9 +290,6 @@ WHERE c.id_camilla NOT IN (
       AND t.estado IN ('pendiente', 'confirmado', 'realizado')
 );
 GO
-
-
-
 
 -- ----------------------------------------------------------------------------
 -- CASO DE USO 4.1: Aplicar 10% de descuento a los 3 productos menos vendidos
@@ -272,4 +330,5 @@ UPDATE producto
 SET precio_vigente = precio_vigente * 0.90
 WHERE id_producto IN (SELECT id_producto FROM productos_menos_vendidos);
 GO
+
 
