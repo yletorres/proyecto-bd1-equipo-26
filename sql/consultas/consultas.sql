@@ -80,3 +80,43 @@ GROUP BY
 ORDER BY
     unidades_vendidas DESC;
 GO
+-- =============================================================================
+-- 3. CONSULTA DE NEGOCIO AVANZADA
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- 3.1 Profesional del mes
+-- El dueño necesita identificar al profesional con más turnos
+-- realizados en septiembre de 2026 para reconocer su trabajo.
+-- Se relacionan cuatro tablas y se utiliza una subconsulta
+-- con HAVING para obtener al profesional con más turnos.
+-- En caso de empate, se muestran todos los profesionales
+-- -----------------------------------------------------------------------------
+
+SELECT
+    p.nombre_completo AS profesional,
+    COUNT(*) AS turnos_realizados
+FROM persona p
+JOIN profesional pr ON pr.dni_profesional = p.dni_persona
+JOIN se_asigna_turno sat ON sat.dni_profesional = pr.dni_profesional
+JOIN turno t ON t.id_turno = sat.id_turno
+WHERE t.estado = 'realizado'
+    AND t.fecha_turno >= '2026-09-01'
+    AND t.fecha_turno < '2026-10-01'
+GROUP BY
+    p.dni_persona,
+    p.nombre_completo
+HAVING COUNT(*) = (
+    SELECT TOP (1)
+        COUNT(*)
+    FROM se_asigna_turno sat2
+    JOIN turno t2 ON t2.id_turno = sat2.id_turno
+    WHERE t2.estado = 'realizado'
+        AND t2.fecha_turno >= '2026-09-01'
+        AND t2.fecha_turno < '2026-10-01'
+    GROUP BY sat2.dni_profesional
+    ORDER BY COUNT(*) DESC
+)
+ORDER BY
+    p.nombre_completo;
+GO
