@@ -199,3 +199,33 @@ HAVING COUNT(venta.id_venta) >= 1
 ORDER BY
     DAY(cliente.fecha_nacimiento);
 GO
+
+
+
+
+
+
+-- ============================================================================
+-- CASO DE USO 4: Detección de Camillas Libres
+-- Camillas libres para asignación de turnos
+-- La recepcionista necesita identificar las camillas físicas que se
+-- encuentran disponibles en una fecha y franja horaria específicas.
+-- Esto permite asignar nuevos turnos evitando la superposición de recursos.
+-- Se relacionan dos tablas (camilla y turno) y se utiliza una subconsulta 
+-- anidada con NOT IN para filtrar las camillas ocupadas en dicho horario.
+-- ============================================================================
+DECLARE @fecha_consulta DATE = '2026-10-20';
+DECLARE @franja_consulta TIME(0) = '10:00:00';
+
+SELECT 
+    c.id_camilla,
+    c.nombre AS nombre_camilla_disponible
+FROM camilla c
+WHERE c.id_camilla NOT IN (
+    SELECT t.id_camilla
+    FROM turno t
+    WHERE t.fecha_turno = @fecha_consulta
+      AND t.franja_horaria = @franja_consulta
+      AND t.estado IN ('pendiente', 'confirmado', 'realizado')
+);
+GO
