@@ -80,6 +80,28 @@ GROUP BY
 ORDER BY
     unidades_vendidas DESC;
 GO
+
+---------------------------------------------------------------
+--Reporte Agregado de Clientes Inactivos
+--Reporte de los clientes que no tienen turnos de hace mas de 6 meses
+--Realizada por el dueño
+---------------------------------------------------------------
+SELECT
+    c.dni_cliente,
+    p.nombre_completo,
+    MAX(t.fecha_turno) AS ultimo_turno
+FROM cliente AS c
+JOIN persona AS p
+    ON c.dni_cliente = p.dni_persona
+LEFT JOIN turno AS t
+    ON c.dni_cliente = t.dni_cliente
+GROUP BY
+    c.dni_cliente,
+    p.nombre_completo
+HAVING
+    MAX(t.fecha_turno) < DATEADD(MONTH, -6, GETDATE());
+GO
+
 -- =============================================================================
 -- 3. CONSULTA DE NEGOCIO AVANZADA
 -- =============================================================================
