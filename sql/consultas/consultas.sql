@@ -305,11 +305,11 @@ DECLARE @fecha_inicio DATE = '2026-09-01';
 DECLARE @fecha_fin DATE = '2026-09-30';
 
 -- Paso 1: Verificación de los 3 productos menos vendidos
-SELECT TOP 3
+SELECT TOP 3 WITH TIES
     p.id_producto,
     p.nombre_producto,
     p.precio_vigente AS precio_original,
-    ISNULL(SUM(c.cantidad), 0) AS unidades_vendidas
+    SUM(CASE WHEN v.id_venta IS NOT NULL THEN c.cantidad ELSE 0 END) AS unidades_vendidas
 FROM producto p
 LEFT JOIN contiene c ON p.id_producto = c.id_producto
 LEFT JOIN venta v ON c.id_venta = v.id_venta AND v.fecha_venta BETWEEN @fecha_inicio AND @fecha_fin
@@ -317,18 +317,22 @@ GROUP BY p.id_producto, p.nombre_producto, p.precio_vigente
 ORDER BY unidades_vendidas ASC;
 
 -- Paso 2: Aplicación del 10% de descuento a los 3 productos menos vendidos
+BEGIN TRANSACTION;
+
 WITH productos_menos_vendidos AS (
-    SELECT TOP 3
+    SELECT TOP 3 WITH TIES
         p.id_producto
     FROM producto p
     LEFT JOIN contiene c ON p.id_producto = c.id_producto
     LEFT JOIN venta v ON c.id_venta = v.id_venta AND v.fecha_venta BETWEEN @fecha_inicio AND @fecha_fin
     GROUP BY p.id_producto
-    ORDER BY ISNULL(SUM(c.cantidad), 0) ASC
+    ORDER BY SUM(CASE WHEN v.id_venta IS NOT NULL THEN c.cantidad ELSE 0 END) ASC
 )
 UPDATE producto
 SET precio_vigente = precio_vigente * 0.90
 WHERE id_producto IN (SELECT id_producto FROM productos_menos_vendidos);
+
+ROLLBACK TRANSACTION; -- Se revierte para prueba segura sin alterar permanentemente los precios
 GO
 
 
