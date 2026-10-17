@@ -1,5 +1,7 @@
 # Comprobante de venta
 
+**Script SQL:** [`sql/consultas/comprobante_venta.sql`](../../sql/consultas/comprobante_venta.sql)
+
 ## Necesidad de información
 
 La recepcionista debe imprimir el comprobante de una venta con sus datos generales, los productos vendidos y el total.

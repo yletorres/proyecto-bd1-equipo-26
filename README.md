@@ -10,7 +10,7 @@
 ![T-SQL](https://img.shields.io/badge/Lenguaje-T--SQL-0078D4?style=for-the-badge)
 ![Normalización](https://img.shields.io/badge/Normalizaci%C3%B3n-3FN-8E44AD?style=for-the-badge)
 ![Tablas](https://img.shields.io/badge/Tablas-10-E91E8C?style=for-the-badge)
-![Estado](https://img.shields.io/badge/Etapas-3%20de%205-F39C12?style=for-the-badge)
+![Estado](https://img.shields.io/badge/Etapas-4%20de%205-F39C12?style=for-the-badge)
 
 [📖 Descripción](#-descripción-del-caso) ·
 [🧱 Modelo](#-modelo-de-datos) ·
@@ -198,12 +198,19 @@ proyecto-bd1-equipo-26/
 │   │   └── Normalizacion_VenusSpa.md
 │   ├── 📁 etapa-03/          # Implementación física
 │   │   └── Resumen Etapa III.md
-│   ├── 📁 etapa-04/          # (pendiente)
+│   ├── 📁 etapa-04/          # Consultas y casos de uso
+│   │   ├── casos-uso.md
+│   │   ├── comprobante-venta.md
+│   │   ├── informe-ventas.md
+│   │   └── consulta-avanzada.md
 │   └── 📁 etapa-05/          # (pendiente)
 ├── 📁 sql/
 │   ├── 📁 ddl/               # crear_bd_venus_spa.sql
 │   ├── 📁 dml/               # insertar_datos_venus_spa.sql
-│   ├── 📁 consultas/         # (pendiente)
+│   ├── 📁 consultas/
+│   │   ├── comprobante_venta.sql
+│   │   ├── informe_ventas.sql
+│   │   └── consulta_avanzada.sql
 │   └── 📁 tecnico/           # (pendiente)
 └── README.md
 ```
@@ -217,7 +224,7 @@ proyecto-bd1-equipo-26/
 | **I** | Relevamiento, alcance y reglas de negocio | ✅ Completa | [`docs/etapa-01`](docs/etapa-01/) |
 | **II** | DER, esquema relacional y normalización | ✅ Completa | [`docs/etapa-02`](docs/etapa-02/) |
 | **III** | Implementación física (DDL y DML) | ✅ Completa | [Resumen Etapa III](docs/etapa-03/Resumen%20Etapa%20III.md) |
-| **IV** | Consultas y objetos técnicos | 🚧 En curso | [`docs/etapa-04`](docs/etapa-04/) |
+| **IV** | Consultas y objetos técnicos | ✅ Completa | [`docs/etapa-04`](docs/etapa-04/) |
 | **V** | Pendiente de definir | ⏳ Pendiente | [`docs/etapa-05`](docs/etapa-05/) |
 
 ---
