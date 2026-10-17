@@ -17,7 +17,7 @@ Situaciones reales del spa que resuelven las consultas de la Etapa IV. Los scrip
 | Dueño | Detectar clientes frecuentes para darles un descuento | `HAVING` con varias condiciones | [consulta-avanzada.md](consulta-avanzada.md) | Hecho |
 | Dueño | Saber qué servicio recaudó más | Subconsulta con `HAVING` | [consulta-avanzada.md](consulta-avanzada.md) | Hecho |
 | Recepcionista | Ver qué camillas están libres en una fecha y hora | Subconsulta con `NOT IN` | [consulta-avanzada.md](consulta-avanzada.md) | Hecho |
-| Administración | Dar 10 % de descuento a los 3 productos menos vendidos de un período | `LEFT JOIN`, CTE y `UPDATE` | [consulta-avanzada.md](consulta-avanzada.md) | Hecho |
+| Administración | Ver el precio con 10 % de descuento de los 3 productos menos vendidos de un período | `LEFT JOIN` + `ISNULL` | [consulta-avanzada.md](consulta-avanzada.md) | Hecho |
 | Dueño | Comparar lo recaudado por turnos contra lo vendido en productos del mes anterior | Por definir | - | Pendiente |
 | Dueño | Detectar qué pares de productos se compran juntos para armar combos | Por definir | - | Pendiente |
 | Dueño | Premiar al "empleado del mes": profesional con más servicios atendidos el mes anterior | Por definir | - | Pendiente |

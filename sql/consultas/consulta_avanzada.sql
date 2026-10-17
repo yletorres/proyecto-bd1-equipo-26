@@ -177,41 +177,29 @@ WHERE c.id_camilla NOT IN (
 GO
 
 -- ----------------------------------------------------------------------------
--- CASO DE USO 4.1: Aplicar 10% de descuento a los 3 productos menos vendidos
--- Descuento promocional a productos de baja rotación
+-- CASO DE USO 4.1: Precio con 10% de descuento para los 3 productos menos vendidos
+-- Promoción para productos de baja rotación
 -- El área de administración necesita identificar los 3 productos con menor
 -- cantidad de unidades vendidas dentro de un período de tiempo determinado
--- para aplicarles un 10% de descuento como estrategia de rotación de stock.
--- Se relacionan tres tablas (producto, contiene y venta) mediante LEFT JOIN 
+-- y ver cuál sería su precio con un 10% de descuento como estrategia de
+-- rotación de stock. La consulta solo muestra los precios, no modifica datos.
+-- Se relacionan tres tablas (producto, contiene y venta) mediante LEFT JOIN
 -- e ISNULL para incluir productos sin ventas, agrupadas con GROUP BY.
--- Para la actualización se utiliza una Expresión de Tabla Común (WITH / CTE) y UPDATE.
+-- Solo se suman las unidades de las ventas que caen dentro del período (CASE).
+-- En caso de empate, se ordena por nombre para que el resultado sea siempre el mismo.
 -- ----------------------------------------------------------------------------
 DECLARE @fecha_inicio DATE = '2026-09-01';
 DECLARE @fecha_fin DATE = '2026-09-30';
 
--- Paso 1: Verificación de los 3 productos menos vendidos
 SELECT TOP 3
     p.id_producto,
     p.nombre_producto,
     p.precio_vigente AS precio_original,
-    ISNULL(SUM(c.cantidad), 0) AS unidades_vendidas
+    CAST(p.precio_vigente * 0.90 AS DECIMAL(10,2)) AS precio_con_descuento,
+    ISNULL(SUM(CASE WHEN v.id_venta IS NOT NULL THEN c.cantidad END), 0) AS unidades_vendidas
 FROM producto p
 LEFT JOIN contiene c ON p.id_producto = c.id_producto
 LEFT JOIN venta v ON c.id_venta = v.id_venta AND v.fecha_venta BETWEEN @fecha_inicio AND @fecha_fin
 GROUP BY p.id_producto, p.nombre_producto, p.precio_vigente
-ORDER BY unidades_vendidas ASC;
-
--- Paso 2: Aplicación del 10% de descuento a los 3 productos menos vendidos
-WITH productos_menos_vendidos AS (
-    SELECT TOP 3
-        p.id_producto
-    FROM producto p
-    LEFT JOIN contiene c ON p.id_producto = c.id_producto
-    LEFT JOIN venta v ON c.id_venta = v.id_venta AND v.fecha_venta BETWEEN @fecha_inicio AND @fecha_fin
-    GROUP BY p.id_producto
-    ORDER BY ISNULL(SUM(c.cantidad), 0) ASC
-)
-UPDATE producto
-SET precio_vigente = precio_vigente * 0.90
-WHERE id_producto IN (SELECT id_producto FROM productos_menos_vendidos);
+ORDER BY unidades_vendidas ASC, p.nombre_producto;
 GO

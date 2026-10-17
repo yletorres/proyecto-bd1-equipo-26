@@ -2,7 +2,7 @@
 
 **Script SQL:** [`sql/consultas/consulta_avanzada.sql`](../../sql/consultas/consulta_avanzada.sql)
 
-Consultas que combinan varias tablas y usan subconsultas, `HAVING` con varias condiciones, `NOT IN` o expresiones de tabla común (CTE).
+Consultas que combinan varias tablas y usan subconsultas, `HAVING` con varias condiciones, `NOT IN` y `LEFT JOIN` para incluir registros sin movimientos.
 
 ## 1. Profesional del mes
 
@@ -66,19 +66,18 @@ Consultas que combinan varias tablas y usan subconsultas, `HAVING` con varias co
 
 **Resultado esperado:** id y nombre de cada camilla disponible. Con el script tal como está (20/10/2026 a las 10:00) devuelve las 10 camillas, porque no hay turnos cargados a esa hora. Para ver el filtro en acción, hay que probar con una fecha y hora que tengan turnos.
 
-## 6. Descuento del 10 % a los 3 productos menos vendidos
+## 6. Precio con 10 % de descuento para los 3 productos menos vendidos
 
-**Necesidad:** administración quiere impulsar la venta de los productos de baja rotación, aplicando un 10 % de descuento a los 3 menos vendidos en un período (por defecto, septiembre de 2026).
+**Necesidad:** administración quiere impulsar la venta de los productos de baja rotación, por lo que necesita ver cuáles son los 3 menos vendidos de un período (por defecto, septiembre de 2026) y cuál sería su precio con un 10 % de descuento.
 
 **Estrategia SQL:**
 
 - Variables `@fecha_inicio` y `@fecha_fin` para definir el período.
-- `LEFT JOIN` entre `producto`, `contiene` y `venta` con `ISNULL(SUM(cantidad), 0)`, para incluir también a los productos sin ventas.
-- **Paso 1:** `SELECT TOP 3 ... ORDER BY unidades_vendidas ASC` para verificar cuáles son.
-- **Paso 2:** una CTE (`WITH`) elige los 3 productos y un `UPDATE` multiplica su `precio_vigente` por 0,90.
+- `LEFT JOIN` entre `producto`, `contiene` y `venta` con `ISNULL(SUM(...), 0)`, para incluir también a los productos sin ventas en el período.
+- `SUM(CASE WHEN v.id_venta IS NOT NULL THEN c.cantidad END)`: solo suma las unidades de las ventas que caen dentro del período.
+- `precio_vigente * 0.90` para calcular el precio con descuento, sin modificar la tabla `producto`.
+- `ORDER BY unidades_vendidas ASC` con `TOP 3`; en caso de empate se ordena por nombre, para que el resultado sea siempre el mismo.
 
-**Resultado esperado:** el paso 1 muestra los 3 productos con su precio original y sus unidades vendidas. El paso 2 modifica esos precios. Con los datos de prueba, el menos vendido de septiembre es la Mascarilla de Arcilla Purificante, con 3 unidades.
-
-> **Importante:** el paso 2 modifica datos. Si se ejecuta dos veces, el descuento se aplica dos veces. Además, si hay empate en el tercer puesto, `TOP 3` elige uno de los empatados.
+**Resultado esperado:** los 3 productos con menos unidades vendidas en el período, con su precio original, su precio con descuento y las unidades vendidas. Con los datos de prueba, el menos vendido de septiembre es la Mascarilla de Arcilla Purificante, con 3 unidades.
 
 > La consulta 2 depende de la fecha actual (`GETDATE()`). Las consultas 1 y 6 están fijadas en septiembre de 2026 y la 5 usa la fecha y hora que se escriban en las variables.
