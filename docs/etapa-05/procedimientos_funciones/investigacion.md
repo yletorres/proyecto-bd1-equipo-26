@@ -173,6 +173,8 @@ La demostración está en la Parte 2 de `sql/tecnico/procedimientos_funciones.sq
 | 5. `fn_TotalVenta` | Total por venta | `evidencias/05_fn_total_venta.png` |
 | 6. `fn_TurnosPorCliente` | Turnos del cliente con servicio y profesional | `evidencias/06_fn_turnos_cliente.png` |
 
+---
+
 ## Bibliografía
 
 - Universidad Nacional del Nordeste, FaCENA. (s. f.). *Unidad 5. SQL y SQL Avanzado, Tema 14: Funciones y Procedimientos Almacenados* [Guía de lectura]. Bases de Datos I, Lic. en Sistemas de Información.
