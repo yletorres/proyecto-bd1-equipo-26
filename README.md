@@ -170,6 +170,13 @@ SELECT * FROM turno;
 SELECT * FROM venta;
 ```
 
+**4️⃣ Scripts técnicos de la Etapa V** *(opcional, después del DDL y el DML)*
+
+```sql
+-- Abrir y ejecutar el script del tema que se quiera probar:
+sql/tecnico/procedimientos_funciones.sql
+```
+
 > ⚠️ El script DDL **elimina y recrea** las tablas (`DROP TABLE IF EXISTS`), por lo que borra cualquier dato previo en `Venus_Spa`.
 > ✅ Ejecutar siempre el **DDL antes que el DML**.
 
@@ -203,7 +210,12 @@ proyecto-bd1-equipo-26/
 │   │   ├── comprobante-venta.md
 │   │   ├── informe-ventas.md
 │   │   └── consulta-avanzada.md
-│   └── 📁 etapa-05/          # (pendiente)
+│   └── 📁 etapa-05/          # Temas técnicos (por tema: investigacion.md y evidencias/)
+│       ├── procedimientos_funciones/
+│       ├── transacciones/
+│       ├── triggers_auditoria/
+│       ├── seguridad/
+│       └── indices_optimizacion/
 ├── 📁 sql/
 │   ├── 📁 ddl/               # crear_bd_venus_spa.sql
 │   ├── 📁 dml/               # insertar_datos_venus_spa.sql
@@ -211,7 +223,12 @@ proyecto-bd1-equipo-26/
 │   │   ├── comprobante_venta.sql
 │   │   ├── informe_ventas.sql
 │   │   └── consulta_avanzada.sql
-│   └── 📁 tecnico/           # (pendiente)
+│   └── 📁 tecnico/           # Scripts de la Etapa V
+│       ├── procedimientos_funciones.sql
+│       ├── transacciones.sql
+│       ├── triggers_auditoria.sql
+│       ├── seguridad.sql
+│       └── indices_optimizacion.sql
 └── README.md
 ```
 
@@ -225,7 +242,19 @@ proyecto-bd1-equipo-26/
 | **II** | DER, esquema relacional y normalización | ✅ Completa | [`docs/etapa-02`](docs/etapa-02/) |
 | **III** | Implementación física (DDL y DML) | ✅ Completa | [Resumen Etapa III](docs/etapa-03/Resumen%20Etapa%20III.md) |
 | **IV** | Consultas y objetos técnicos | ✅ Completa | [`docs/etapa-04`](docs/etapa-04/) |
-| **V** | Pendiente de definir | ⏳ Pendiente | [`docs/etapa-05`](docs/etapa-05/) |
+| **V** | Temas técnicos: procedimientos y funciones, transacciones, triggers de auditoría, seguridad e índices | 🚧 En curso | [`docs/etapa-05`](docs/etapa-05/) |
+
+### 🔧 Etapa V: temas técnicos
+
+Cada tema se documenta en `docs/etapa-05/<tema>/` (investigación y evidencias) y se implementa en `sql/tecnico/<tema>.sql`.
+
+| Tema | Documentación | Script | Estado |
+|---|---|---|---|
+| Procedimientos y funciones almacenadas | [`docs/etapa-05/procedimientos_funciones`](docs/etapa-05/procedimientos_funciones/) | [`procedimientos_funciones.sql`](sql/tecnico/procedimientos_funciones.sql) | ✅ Completo |
+| Manejo de transacciones | [`docs/etapa-05/transacciones`](docs/etapa-05/transacciones/) | [`transacciones.sql`](sql/tecnico/transacciones.sql) | ⏳ Pendiente |
+| Triggers de auditoría | [`docs/etapa-05/triggers_auditoria`](docs/etapa-05/triggers_auditoria/) | [`triggers_auditoria.sql`](sql/tecnico/triggers_auditoria.sql) | ⏳ Pendiente |
+| Seguridad | [`docs/etapa-05/seguridad`](docs/etapa-05/seguridad/) | [`seguridad.sql`](sql/tecnico/seguridad.sql) | ⏳ Pendiente |
+| Índices (optimización) | [`docs/etapa-05/indices_optimizacion`](docs/etapa-05/indices_optimizacion/) | [`indices_optimizacion.sql`](sql/tecnico/indices_optimizacion.sql) | ⏳ Pendiente |
 
 ---
 
