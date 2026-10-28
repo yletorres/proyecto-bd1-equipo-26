@@ -132,33 +132,57 @@ IF OBJECT_ID('dbo.fn_TurnosPorCliente', 'IF') IS NOT NULL
     DROP FUNCTION dbo.fn_TurnosPorCliente;
 GO
 
-CREATE FUNCTION dbo.fn_TurnosPorCliente (@dni_cliente INT)
-RETURNS TABLE
-AS
-RETURN
-(
+ CREATE FUNCTION dbo.fn_TurnosPorCliente (@dni_cliente INT)
+ RETURNS TABLE
+ AS
+ RETURN
+ (
     SELECT t.id_turno,
-           t.fecha_turno,
-           t.franja_horaria,
-           t.estado,
-           s.denominacion    AS servicio,
-           t.precio_historico,
-           p.nombre_completo AS profesional
+       t.fecha_turno,
+       t.franja_horaria,
+       t.estado,
+       s.denominacion                    AS servicio,
+       t.precio_historico,
+       STRING_AGG(p.nombre_completo, ', ') AS profesionales
     FROM turno t
     INNER JOIN servicio s         ON s.id_servicio = t.id_servicio
     INNER JOIN se_asigna_turno sa ON sa.id_turno = t.id_turno
     INNER JOIN persona p          ON p.dni_persona = sa.dni_profesional
     WHERE t.dni_cliente = @dni_cliente
+    GROUP BY t.id_turno, t.fecha_turno, t.franja_horaria, t.estado,
+             s.denominacion, t.precio_historico
 );
 GO
+
+-- CREATE FUNCTION dbo.fn_TurnosPorCliente (@dni_cliente INT)
+-- RETURNS TABLE
+-- AS
+-- RETURN
+-- (
+--    SELECT t.id_turno,
+--           t.fecha_turno,
+--           t.franja_horaria,
+--           t.estado,
+--           s.denominacion    AS servicio,
+--           t.precio_historico,
+--           p.nombre_completo AS profesional
+--    FROM turno t
+--    INNER JOIN servicio s         ON s.id_servicio = t.id_servicio
+--    INNER JOIN se_asigna_turno sa ON sa.id_turno = t.id_turno
+--    INNER JOIN persona p          ON p.dni_persona = sa.dni_profesional
+--    WHERE t.dni_cliente = @dni_cliente
+-- );
+-- GO
+-- VERSION ANTERIOR: mostraba una fila con datos repetidos por profesional
 
 -- =============================================================================
 -- PARTE 2: DEMOSTRACIÓN DE USO
 -- Se toman datos existentes de la base poblada. Requiere al menos 2 camillas,
 -- 1 cliente, 1 servicio y 1 profesional cargados.
 -- Ejecutar esta parte completa de una sola vez (comparte variables).
+-- Se puede ejecutar varias veces: al inicio borra el turno de prueba anterior.
 -- =============================================================================
-
+ 
 DECLARE @dni_cliente     INT = (SELECT TOP 1 dni_cliente FROM cliente ORDER BY dni_cliente);
 DECLARE @id_camilla      INT = (SELECT TOP 1 id_camilla FROM camilla ORDER BY id_camilla);
 DECLARE @id_camilla_otra INT = (SELECT TOP 1 id_camilla FROM camilla
@@ -168,6 +192,15 @@ DECLARE @dni_profesional INT = (SELECT TOP 1 dni_profesional FROM profesional OR
 DECLARE @fecha           DATE = '2027-01-15';   -- fecha sin turnos cargados
 DECLARE @franja          TIME(0) = '09:00:00';
 DECLARE @id_turno        INT;
+ 
+-- Limpieza previa: borra el turno de prueba de una ejecución anterior (si existe)
+-- para poder correr esta parte todas las veces que haga falta.
+DELETE FROM se_asigna_turno
+WHERE id_turno IN (SELECT id_turno FROM turno
+                   WHERE fecha_turno = @fecha AND dni_cliente = @dni_cliente);
+ 
+DELETE FROM turno
+WHERE fecha_turno = @fecha AND dni_cliente = @dni_cliente;
 
 -- Prueba 1: registro exitoso (se devuelve el id por el parámetro OUTPUT)
 PRINT '--- Prueba 1: registro exitoso ---';
@@ -180,9 +213,9 @@ EXEC dbo.usp_RegistrarTurno
      @franja_horaria  = @franja,
      @metodo_pago     = 'efectivo',
      @id_turno        = @id_turno OUTPUT;
-
+ 
 SELECT @id_turno AS id_turno_generado;
-
+ 
 -- Prueba 2: verificación de lo insertado
 PRINT '--- Prueba 2: verificación en turno y se_asigna_turno ---';
 SELECT t.id_turno, t.fecha_turno, t.franja_horaria, t.estado,
@@ -190,9 +223,9 @@ SELECT t.id_turno, t.fecha_turno, t.franja_horaria, t.estado,
 FROM turno t
 INNER JOIN servicio s ON s.id_servicio = t.id_servicio
 WHERE t.id_turno = @id_turno;
-
+ 
 SELECT * FROM se_asigna_turno WHERE id_turno = @id_turno;
-
+ 
 -- Prueba 3: camilla ocupada (RN.02.1) - debe rechazarse
 PRINT '--- Prueba 3: camilla ocupada ---';
 BEGIN TRY
@@ -209,7 +242,7 @@ END TRY
 BEGIN CATCH
     SELECT ERROR_MESSAGE() AS error_prueba_3;
 END CATCH;
-
+ 
 -- Prueba 4: cliente con turno en la misma franja (RN.03) - debe rechazarse
 PRINT '--- Prueba 4: cliente con turno en la misma franja ---';
 BEGIN TRY
@@ -226,18 +259,15 @@ END TRY
 BEGIN CATCH
     SELECT ERROR_MESSAGE() AS error_prueba_4;
 END CATCH;
-
+ 
 -- Prueba 5: función escalar fn_TotalVenta
 PRINT '--- Prueba 5: fn_TotalVenta ---';
 SELECT TOP 10 v.id_venta, v.fecha_venta, dbo.fn_TotalVenta(v.id_venta) AS total
 FROM venta v
 ORDER BY v.id_venta;
-
+ 
 -- Prueba 6: función de tabla fn_TurnosPorCliente
 PRINT '--- Prueba 6: fn_TurnosPorCliente ---';
 SELECT * FROM dbo.fn_TurnosPorCliente(@dni_cliente) ORDER BY fecha_turno;
-
--- Limpieza opcional del turno de prueba (descomentar para dejar la base como estaba)
--- DELETE FROM se_asigna_turno WHERE id_turno = @id_turno;
--- DELETE FROM turno WHERE id_turno = @id_turno;
 GO
+ 
