@@ -115,13 +115,14 @@ SELECT * FROM dbo.fn_nombre_tabla(valor);
 
 ## 4. Caso concreto aplicado al sistema de ventas (Venus Spa)
 
-Se implementan tres objetos que apoyan reglas de negocio ya modeladas en la base `Venus_Spa`:
-
 | Objeto | Tipo | Regla de negocio que apoya |
 |---|---|---|
 | `usp_RegistrarTurno` | Procedimiento con parámetro `OUTPUT` | RN.02.1, RN.03, RN.05.1, RN.07, RN.07.1 |
+| `usp_CancelarTurno` | Procedimiento | RN.09 |
 | `fn_TotalVenta` | Función escalar | RN.05 (precio histórico en el detalle de venta) |
+| `fn_DescuentoCliente` | Función escalar que usa otra función | RN.05 (se apoya en `fn_TotalVenta` y en `precio_historico`) |
 | `fn_TurnosPorCliente` | Función de tabla en línea | Consulta de turnos de un cliente con su servicio y profesional |
+| `fn_CamillasLibres` | Función de tabla en línea | RN.02.1 |
 
 **Criterio de elección:** se usa un **procedimiento** cuando hay que *hacer* algo (modificar datos, validar, controlar errores) y una **función** cuando hay que *calcular o consultar* algo que se reutiliza dentro de otras consultas.
 
@@ -151,6 +152,34 @@ Las dos inserciones se agrupan en una transacción mínima, para que se guarden 
 
 **Por qué una función y no un procedimiento:** es una consulta de **solo lectura** cuyo resultado conviene seguir manipulando. Como función de tabla se puede usar en el `FROM`, filtrar con `WHERE` (por ejemplo, solo los turnos pendientes), ordenar o combinar con otras tablas mediante `JOIN`. Si fuera un procedimiento, sus filas solo se mostrarían en pantalla, y para filtrarlas habría que guardarlas antes en una tabla temporal.
 
+## 4.4 `fn_DescuentoCliente`
+
+**Problema:** el spa quiere premiar a los clientes frecuentes según lo que gastaron, y esa regla debe aplicarse siempre igual.
+
+**Solución:** una función escalar que recibe el DNI del cliente, suma lo gastado en productos (llamando a `fn_TotalVenta` por cada venta) más el precio de sus turnos en estado `realizado`, y devuelve el porcentaje: 10 % desde $60.000 acumulados, 5 % desde $30.000 y 0 % en otro caso. Los umbrales se adaptaron a los precios reales de Venus Spa.
+
+**Por qué una función y no un procedimiento:** es un cálculo que no modifica datos y devuelve un único valor. Puede usarse en cualquier consulta (por ejemplo, para listar todos los clientes con su descuento) y también dentro de otros objetos, como `usp_RegistrarVenta`. Esto muestra que las funciones se pueden componer: una función llama a otra, y un procedimiento llama a la función.
+
+## 4.5 `usp_CancelarTurno`
+
+**Problema:** cancelar un turno no es borrarlo; hay que cambiar su estado a `cancelado` (RN.09) y solo tiene sentido hacerlo si está `pendiente` o `confirmado`.
+
+**Solución:** un procedimiento que recibe el `id_turno`, verifica que exista y que su estado permita la cancelación, actualiza el estado y devuelve la fila resultante. Como es una única sentencia `UPDATE`, SQL Server ya la ejecuta de forma atómica y no hace falta una transacción explícita.
+
+**Por qué un procedimiento y no una función:** modifica datos (`UPDATE`) y valida reglas con mensajes de error.
+
+## 4.6 `fn_CamillasLibres`
+
+**Problema:** antes de registrar un turno hay que saber qué camillas están disponibles en una fecha y franja (RN.02.1).
+
+**Solución:** una función de tabla en línea que recibe fecha y franja y devuelve las camillas sin turno en ese momento. Se usa en el `FROM` y permite filtrar, ordenar o combinar con otras tablas. Su resultado alimenta el parámetro `@id_camilla` de `usp_RegistrarTurno`.
+
+**Por qué una función y no un procedimiento:** es una consulta de solo lectura cuyo resultado conviene seguir manipulando con `WHERE`, `ORDER BY` o `JOIN`.
+
+*Observación de diseño:* la restricción `UNIQUE (fecha_turno, franja_horaria, id_camilla)` no considera el estado del turno, así que un turno cancelado sigue ocupando su camilla. La función es coherente con esa restricción. Si el spa quisiera liberar la camilla al cancelar, habría que cambiar la restricción por un índice único filtrado (`WHERE estado <> 'cancelado'`).
+
+---
+
 ## 5. Script de demostración y resultados obtenidos
 
 La demostración está en la Parte 2 de `sql/tecnico/procedimientos_funciones.sql` y toma datos ya cargados en la base. Sigue este orden:
@@ -172,6 +201,15 @@ La demostración está en la Parte 2 de `sql/tecnico/procedimientos_funciones.sq
 | 4. Cliente con turno | Error: el cliente ya tiene un turno | `evidencias/04_error_cliente.png` |
 | 5. `fn_TotalVenta` | Total por venta | `evidencias/05_fn_total_venta.png` |
 | 6. `fn_TurnosPorCliente` | Turnos del cliente con servicio y profesional | `evidencias/06_fn_turnos_cliente.png` |
+
+
+La demostración de la ampliación está en la Parte 4 del script. Es repetible: al final deshace la venta y el turno de prueba y restaura el stock.
+
+| Prueba | Resultado esperado | Captura |
+|---|---|---|
+| 7. `fn_DescuentoCliente` | Lista de clientes con su porcentaje de descuento (0, 5 o 10) | `evidencias/07_fn_DescuentoCliente_Ampliacion.png` |
+| 8. `fn_CamillasLibres` | Una camilla menos disponible después de registrar un turno | `evidencias/08_fn_CamillasLibres_Ampliacion.png` |
+| 9. `usp_CancelarTurno` | El turno pasa a `cancelado`; un segundo intento da error | `evidencias/09_usp_CancelarTurno_Ampliacion.png` |
 
 ---
 
