@@ -270,4 +270,196 @@ ORDER BY v.id_venta;
 PRINT '--- Prueba 6: fn_TurnosPorCliente ---';
 SELECT * FROM dbo.fn_TurnosPorCliente(@dni_cliente) ORDER BY fecha_turno;
 GO
- 
+
+-- =============================================================================
+-- PARTE 3: AMPLIACIÓN (objetos adicionales)
+-- Se agregan objetos sobre las tablas de ventas, productos y turnos.
+-- Conforme a los ejemplos dados en la Guía de la ETAPA V.
+-- Requiere ejecutar antes la Parte 1 (usa dbo.fn_TotalVenta y dbo.usp_RegistrarTurno).
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- 3.1 FUNCIÓN ESCALAR: fn_DescuentoCliente
+-- Calcula el porcentaje de descuento de un cliente según lo que acumuló entre
+-- compras de productos (fn_TotalVenta) y servicios ya realizados.
+--   acumulado >= 60.000  -> 10 %
+--   acumulado >= 30.000  ->  5 %
+--   caso contrario       ->  0 %
+-- Los umbrales se ajustaron a los precios de Venus Spa (productos desde
+-- $3.200 y servicios desde $12.000).
+-- -----------------------------------------------------------------------------
+IF OBJECT_ID('dbo.fn_DescuentoCliente', 'FN') IS NOT NULL
+    DROP FUNCTION dbo.fn_DescuentoCliente;
+GO
+
+CREATE FUNCTION dbo.fn_DescuentoCliente (@dni_cliente INT)
+RETURNS DECIMAL(5,2)
+AS
+BEGIN
+    DECLARE @en_productos DECIMAL(14,2);
+    DECLARE @en_servicios DECIMAL(14,2);
+
+    -- Una función puede llamar a otra: se reutiliza fn_TotalVenta
+    SELECT @en_productos = SUM(dbo.fn_TotalVenta(id_venta))
+    FROM venta
+    WHERE dni_cliente = @dni_cliente;
+
+    -- Solo cuentan los turnos efectivamente realizados
+    SELECT @en_servicios = SUM(precio_historico)
+    FROM turno
+    WHERE dni_cliente = @dni_cliente
+      AND estado = 'realizado';
+
+    DECLARE @acumulado DECIMAL(14,2) = ISNULL(@en_productos, 0) + ISNULL(@en_servicios, 0);
+
+    RETURN CASE WHEN @acumulado >= 60000 THEN 10.00
+                WHEN @acumulado >= 30000 THEN  5.00
+                ELSE 0.00
+           END;
+END;
+GO
+
+-- -----------------------------------------------------------------------------
+-- 3.2 PROCEDIMIENTO: usp_CancelarTurno
+-- Cambia el estado de un turno a 'cancelado' (RN.09).
+-- Solo se pueden cancelar turnos 'pendiente' o 'confirmado'.
+-- Es una única sentencia UPDATE, por eso no necesita transacción explícita.
+-- -----------------------------------------------------------------------------
+IF OBJECT_ID('dbo.usp_CancelarTurno', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_CancelarTurno;
+GO
+
+CREATE PROCEDURE dbo.usp_CancelarTurno
+    @id_turno INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @estado VARCHAR(20);
+
+    SELECT @estado = estado
+    FROM turno
+    WHERE id_turno = @id_turno;
+
+    IF @estado IS NULL
+    BEGIN
+        RAISERROR('El turno indicado no existe.', 16, 1);
+        RETURN;
+    END;
+
+    IF @estado NOT IN ('pendiente', 'confirmado')
+    BEGIN
+        RAISERROR('Solo se pueden cancelar turnos pendientes o confirmados.', 16, 1);
+        RETURN;
+    END;
+
+    UPDATE turno
+    SET estado = 'cancelado'
+    WHERE id_turno = @id_turno;
+
+    SELECT id_turno, fecha_turno, franja_horaria, estado
+    FROM turno
+    WHERE id_turno = @id_turno;
+END;
+GO
+
+-- -----------------------------------------------------------------------------
+-- 3.3 FUNCIÓN DE TABLA EN LÍNEA: fn_CamillasLibres
+-- Devuelve las camillas sin turno en una fecha y franja determinadas.
+-- Sirve para elegir @id_camilla antes de llamar a usp_RegistrarTurno (RN.02.1).
+-- Nota: la restricción UNIQUE (fecha, franja, camilla) no mira el estado, por
+-- lo que un turno cancelado también ocupa la camilla; la función es coherente
+-- con esa restricción.
+-- -----------------------------------------------------------------------------
+IF OBJECT_ID('dbo.fn_CamillasLibres', 'IF') IS NOT NULL
+    DROP FUNCTION dbo.fn_CamillasLibres;
+GO
+
+CREATE FUNCTION dbo.fn_CamillasLibres (@fecha DATE, @franja TIME(0))
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT c.id_camilla,
+           c.nombre
+    FROM camilla c
+    WHERE NOT EXISTS (SELECT 1
+                      FROM turno t
+                      WHERE t.id_camilla     = c.id_camilla
+                        AND t.fecha_turno    = @fecha
+                        AND t.franja_horaria = @franja)
+);
+GO
+
+-- =============================================================================
+-- PARTE 4: DEMOSTRACIÓN DE LA AMPLIACIÓN
+-- Ejecutar completa de una sola vez (comparte variables). Es repetible:
+-- al final deshace la venta de prueba y devuelve el stock.
+-- =============================================================================
+
+DECLARE @fecha2       DATE    = '2027-01-16';   -- fecha sin turnos cargados
+DECLARE @franja2      TIME(0) = '09:00:00';
+DECLARE @dni_cli_desc INT     = (SELECT TOP 1 dni_cliente FROM cliente
+                                 ORDER BY dbo.fn_DescuentoCliente(dni_cliente) DESC, dni_cliente);
+DECLARE @dni_cli_sin  INT     = (SELECT TOP 1 dni_cliente FROM cliente
+                                 ORDER BY dbo.fn_DescuentoCliente(dni_cliente) ASC, dni_cliente);
+DECLARE @id_producto  INT     = (SELECT TOP 1 id_producto FROM producto
+                                 WHERE stock_disponible >= 5 ORDER BY id_producto);
+DECLARE @stock_antes  INT     = (SELECT stock_disponible FROM producto WHERE id_producto = @id_producto);
+DECLARE @ventas_antes INT     = (SELECT COUNT(*) FROM venta);
+DECLARE @id_venta     INT;
+DECLARE @descuento    DECIMAL(5,2);
+DECLARE @id_turno2    INT;
+DECLARE @id_camilla2  INT     = (SELECT TOP 1 id_camilla FROM camilla ORDER BY id_camilla);
+DECLARE @id_servicio2 INT     = (SELECT TOP 1 id_servicio FROM servicio ORDER BY id_servicio);
+DECLARE @dni_prof2    INT     = (SELECT TOP 1 dni_profesional FROM profesional ORDER BY dni_profesional);
+
+-- Limpieza previa del turno de prueba de una ejecución anterior (si existe)
+DELETE FROM se_asigna_turno
+WHERE id_turno IN (SELECT id_turno FROM turno WHERE fecha_turno = @fecha2);
+DELETE FROM turno WHERE fecha_turno = @fecha2;
+
+-- Prueba 7: fn_DescuentoCliente aplicada a todos los clientes
+PRINT '--- Prueba 7: fn_DescuentoCliente (descuento por cliente) ---';
+SELECT p.nombre_completo,
+       dbo.fn_DescuentoCliente(c.dni_cliente) AS descuento_porcentaje
+FROM cliente c
+INNER JOIN persona p ON p.dni_persona = c.dni_cliente
+ORDER BY descuento_porcentaje DESC, p.nombre_completo;
+
+-- Prueba 8: fn_CamillasLibres antes y después de registrar un turno
+PRINT '--- Prueba 8: fn_CamillasLibres ---';
+SELECT COUNT(*) AS camillas_libres_antes
+FROM dbo.fn_CamillasLibres(@fecha2, @franja2);
+
+EXEC dbo.usp_RegistrarTurno
+     @dni_cliente     = @dni_cli_sin,
+     @id_camilla      = @id_camilla2,
+     @id_servicio     = @id_servicio2,
+     @dni_profesional = @dni_prof2,
+     @fecha_turno     = @fecha2,
+     @franja_horaria  = @franja2,
+     @metodo_pago     = 'efectivo',
+     @id_turno        = @id_turno2 OUTPUT;
+
+SELECT COUNT(*) AS camillas_libres_despues
+FROM dbo.fn_CamillasLibres(@fecha2, @franja2);
+
+-- Prueba 9: usp_CancelarTurno
+PRINT '--- Prueba 9: usp_CancelarTurno ---';
+EXEC dbo.usp_CancelarTurno @id_turno = @id_turno2;   -- pasa a 'cancelado'
+
+PRINT '--- Prueba 9b: cancelar un turno ya cancelado (debe rechazarse) ---';
+BEGIN TRY
+    EXEC dbo.usp_CancelarTurno @id_turno = @id_turno2;
+END TRY
+BEGIN CATCH
+    SELECT ERROR_MESSAGE() AS error_prueba_9b;
+END CATCH;
+
+-- Limpieza final: deja la base como estaba antes de la demostración
+DELETE FROM se_asigna_turno WHERE id_turno = @id_turno2;
+DELETE FROM turno           WHERE id_turno = @id_turno2;
+DELETE FROM venta           WHERE id_venta = @id_venta;   -- contiene se borra en cascada
+UPDATE producto SET stock_disponible = @stock_antes WHERE id_producto = @id_producto;
+GO
