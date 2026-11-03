@@ -1,0 +1,5 @@
+# Archivos temporales del sistema / IDE
+.DS_Store
+Thumbs.db
+*.tmp
+

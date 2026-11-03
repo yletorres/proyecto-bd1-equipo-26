@@ -252,9 +252,9 @@ Cada tema se documenta en `docs/etapa-05/<tema>/` (investigación y evidencias) 
 |---|---|---|---|
 | Procedimientos y funciones almacenadas | [`docs/etapa-05/procedimientos_funciones`](docs/etapa-05/procedimientos_funciones/) | [`procedimientos_funciones.sql`](sql/tecnico/procedimientos_funciones.sql) | ✅ Completo |
 | Manejo de transacciones | [`docs/etapa-05/transacciones`](docs/etapa-05/transacciones/) | [`transacciones.sql`](sql/tecnico/transacciones.sql) | ⏳ Pendiente |
-| Triggers de auditoría | [`docs/etapa-05/triggers_auditoria`](docs/etapa-05/triggers_auditoria/) | [`triggers_auditoria.sql`](sql/tecnico/triggers_auditoria.sql) | ⏳ Pendiente |
+| Triggers de auditoría | [`docs/etapa-05/triggers_auditoria`](docs/etapa-05/triggers_auditoria/) | [`triggers_auditoria.sql`](sql/tecnico/triggers_auditoria.sql) | ✅ Completo |
 | Seguridad | [`docs/etapa-05/seguridad`](docs/etapa-05/seguridad/) | [`seguridad.sql`](sql/tecnico/seguridad.sql) | ⏳ Pendiente |
-| Índices (optimización) | [`docs/etapa-05/indices_optimizacion`](docs/etapa-05/indices_optimizacion/) | [`indices_optimizacion.sql`](sql/tecnico/indices_optimizacion.sql) | ⏳ Pendiente |
+| Índices (optimización) | [`docs/etapa-05/indices_optimizacion`](docs/etapa-05/indices_optimizacion/) | [`indices_optimizacion.sql`](sql/tecnico/indices_optimizacion.sql) | ✅ Completo |
 
 ---
 
