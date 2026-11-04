@@ -256,7 +256,7 @@ proyecto-bd1-equipo-26/
 |:---:|---|:---:|---|
 | **I** | Relevamiento, alcance y reglas de negocio | ✅ Completa | [`docs/etapa-01`](docs/etapa-01/) |
 | **II** | DER, esquema relacional y normalización | ✅ Completa | [`docs/etapa-02`](docs/etapa-02/) |
-| **III** | Implementación física (DDL y DML) | ✅ Completa | [Resumen Etapa III](docs/etapa-03/Resumen%20Etapa%20III.md) |
+| **III** | Implementación física (DDL y DML) | ✅ Completa | [Resumen Etapa III](docs/etapa-03/) |
 | **IV** | Consultas y casos de uso: comprobante de venta, informes y consulta avanzada | ✅ Completa | [`docs/etapa-04`](docs/etapa-04/) |
 | **V** | Temas técnicos: procedimientos y funciones, transacciones, triggers de auditoría, seguridad e índices | ✅ Completa | [`docs/etapa-05`](docs/etapa-05/) |
 
