@@ -242,7 +242,7 @@ proyecto-bd1-equipo-26/
 | **II** | DER, esquema relacional y normalización | ✅ Completa | [`docs/etapa-02`](docs/etapa-02/) |
 | **III** | Implementación física (DDL y DML) | ✅ Completa | [Resumen Etapa III](docs/etapa-03/Resumen%20Etapa%20III.md) |
 | **IV** | Consultas y objetos técnicos | ✅ Completa | [`docs/etapa-04`](docs/etapa-04/) |
-| **V** | Temas técnicos: procedimientos y funciones, transacciones, triggers de auditoría, seguridad e índices | 🚧 En curso | [`docs/etapa-05`](docs/etapa-05/) |
+| **V** | Temas técnicos: procedimientos y funciones, transacciones, triggers de auditoría, seguridad e índices | ✅ Completa | [`docs/etapa-05`](docs/etapa-05/) |
 
 ### 🔧 Etapa V: temas técnicos
 
@@ -251,9 +251,9 @@ Cada tema se documenta en `docs/etapa-05/<tema>/` (investigación y evidencias) 
 | Tema | Documentación | Script | Estado |
 |---|---|---|---|
 | Procedimientos y funciones almacenadas | [`docs/etapa-05/procedimientos_funciones`](docs/etapa-05/procedimientos_funciones/) | [`procedimientos_funciones.sql`](sql/tecnico/procedimientos_funciones.sql) | ✅ Completo |
-| Manejo de transacciones | [`docs/etapa-05/transacciones`](docs/etapa-05/transacciones/) | [`transacciones.sql`](sql/tecnico/transacciones.sql) | ⏳ Pendiente |
+| Manejo de transacciones | [`docs/etapa-05/transacciones`](docs/etapa-05/transacciones/) | [`transacciones.sql`](sql/tecnico/transacciones.sql) | ✅ Completo |
 | Triggers de auditoría | [`docs/etapa-05/triggers_auditoria`](docs/etapa-05/triggers_auditoria/) | [`triggers_auditoria.sql`](sql/tecnico/triggers_auditoria.sql) | ✅ Completo |
-| Seguridad | [`docs/etapa-05/seguridad`](docs/etapa-05/seguridad/) | [`seguridad.sql`](sql/tecnico/seguridad.sql) | ⏳ Pendiente |
+| Seguridad | [`docs/etapa-05/seguridad`](docs/etapa-05/seguridad/) | [`seguridad.sql`](sql/tecnico/seguridad.sql) | ✅ Completo |
 | Índices (optimización) | [`docs/etapa-05/indices_optimizacion`](docs/etapa-05/indices_optimizacion/) | [`indices_optimizacion.sql`](sql/tecnico/indices_optimizacion.sql) | ✅ Completo |
 
 ---
