@@ -10,7 +10,7 @@
 ![T-SQL](https://img.shields.io/badge/Lenguaje-T--SQL-0078D4?style=for-the-badge)
 ![Normalización](https://img.shields.io/badge/Normalizaci%C3%B3n-3FN-8E44AD?style=for-the-badge)
 ![Tablas](https://img.shields.io/badge/Tablas-10-E91E8C?style=for-the-badge)
-![Estado](https://img.shields.io/badge/Etapas-4%20de%205-F39C12?style=for-the-badge)
+![Estado](https://img.shields.io/badge/Etapas-5%20de%205-2ECC71?style=for-the-badge)
 
 [📖 Descripción](#-descripción-del-caso) ·
 [🧱 Modelo](#-modelo-de-datos) ·
@@ -170,15 +170,31 @@ SELECT * FROM turno;
 SELECT * FROM venta;
 ```
 
-**4️⃣ Scripts técnicos de la Etapa V** *(opcional, después del DDL y el DML)*
+**4️⃣ Consultas de la Etapa IV** *(opcional, después del DDL y el DML)*
 
 ```sql
--- Abrir y ejecutar el script del tema que se quiera probar:
-sql/tecnico/procedimientos_funciones.sql
+sql/consultas/comprobante_venta.sql   -- factura de una venta (encabezado, detalle y total)
+sql/consultas/informe_ventas.sql      -- productos más vendidos y clientes inactivos
+sql/consultas/consulta_avanzada.sql   -- profesional del mes, cumpleañeros, clientes frecuentes y servicio más rentable
 ```
+
+**5️⃣ Scripts técnicos de la Etapa V** *(opcional, después del DDL y el DML)*
+
+Cada script es independiente: abrir y ejecutar completo el del tema que se quiera probar.
+
+```sql
+sql/tecnico/procedimientos_funciones.sql  -- usp_RegistrarTurno, usp_CancelarTurno y funciones fn_*
+sql/tecnico/transacciones.sql             -- usp_RegistrarVenta y usp_CancelarVenta (COMMIT / ROLLBACK)
+sql/tecnico/triggers_auditoria.sql        -- tabla auditoria + 4 triggers
+sql/tecnico/seguridad.sql                 -- logins, usuarios y roles con GRANT / DENY
+sql/tecnico/indices_optimizacion.sql      -- tabla de prueba y comparación con índices
+```
+
+> 💡 Para probar `seguridad.sql` conviene haber ejecutado antes `procedimientos_funciones.sql`, porque otorga permisos sobre `usp_RegistrarTurno`.
 
 > ⚠️ El script DDL **elimina y recrea** las tablas (`DROP TABLE IF EXISTS`), por lo que borra cualquier dato previo en `Venus_Spa`.
 > ✅ Ejecutar siempre el **DDL antes que el DML**.
+> 🧪 Los scripts de la Etapa V crean objetos auxiliares fuera de las 10 tablas del modelo: `auditoria` (triggers) y `venta_prueba_indices` (índices, tabla de prueba separada para no tocar las ventas reales). Además, `seguridad.sql` crea logins con contraseñas en texto plano: es solo para uso académico.
 
 ### Evidencia de ejecución
 
@@ -241,7 +257,7 @@ proyecto-bd1-equipo-26/
 | **I** | Relevamiento, alcance y reglas de negocio | ✅ Completa | [`docs/etapa-01`](docs/etapa-01/) |
 | **II** | DER, esquema relacional y normalización | ✅ Completa | [`docs/etapa-02`](docs/etapa-02/) |
 | **III** | Implementación física (DDL y DML) | ✅ Completa | [Resumen Etapa III](docs/etapa-03/Resumen%20Etapa%20III.md) |
-| **IV** | Consultas y objetos técnicos | ✅ Completa | [`docs/etapa-04`](docs/etapa-04/) |
+| **IV** | Consultas y casos de uso: comprobante de venta, informes y consulta avanzada | ✅ Completa | [`docs/etapa-04`](docs/etapa-04/) |
 | **V** | Temas técnicos: procedimientos y funciones, transacciones, triggers de auditoría, seguridad e índices | ✅ Completa | [`docs/etapa-05`](docs/etapa-05/) |
 
 ### 🔧 Etapa V: temas técnicos
@@ -250,11 +266,11 @@ Cada tema se documenta en `docs/etapa-05/<tema>/` (investigación y evidencias) 
 
 | Tema | Documentación | Script | Estado |
 |---|---|---|---|
-| Procedimientos y funciones almacenadas | [`docs/etapa-05/procedimientos_funciones`](docs/etapa-05/procedimientos_funciones/) | [`procedimientos_funciones.sql`](sql/tecnico/procedimientos_funciones.sql) | ✅ Completo |
-| Manejo de transacciones | [`docs/etapa-05/transacciones`](docs/etapa-05/transacciones/) | [`transacciones.sql`](sql/tecnico/transacciones.sql) | ✅ Completo |
-| Triggers de auditoría | [`docs/etapa-05/triggers_auditoria`](docs/etapa-05/triggers_auditoria/) | [`triggers_auditoria.sql`](sql/tecnico/triggers_auditoria.sql) | ✅ Completo |
-| Seguridad | [`docs/etapa-05/seguridad`](docs/etapa-05/seguridad/) | [`seguridad.sql`](sql/tecnico/seguridad.sql) | ✅ Completo |
-| Índices (optimización) | [`docs/etapa-05/indices_optimizacion`](docs/etapa-05/indices_optimizacion/) | [`indices_optimizacion.sql`](sql/tecnico/indices_optimizacion.sql) | ✅ Completo |
+| Procedimientos y funciones almacenadas (`usp_RegistrarTurno`, `usp_CancelarTurno`, `fn_TotalVenta`, `fn_TurnosPorCliente`, `fn_DescuentoCliente`, `fn_CamillasLibres`) | [`docs/etapa-05/procedimientos_funciones`](docs/etapa-05/procedimientos_funciones/) | [`procedimientos_funciones.sql`](sql/tecnico/procedimientos_funciones.sql) | ✅ Completo |
+| Manejo de transacciones (`usp_RegistrarVenta`, `usp_CancelarVenta`) | [`docs/etapa-05/transacciones`](docs/etapa-05/transacciones/) | [`transacciones.sql`](sql/tecnico/transacciones.sql) | ✅ Completo |
+| Triggers de auditoría (`producto`, `servicio`, `turno.precio_historico`, `contiene.precio`) | [`docs/etapa-05/triggers_auditoria`](docs/etapa-05/triggers_auditoria/) | [`triggers_auditoria.sql`](sql/tecnico/triggers_auditoria.sql) | ✅ Completo |
+| Seguridad (usuarios admin y lectura; roles recepcionista, dueño y administración) | [`docs/etapa-05/seguridad`](docs/etapa-05/seguridad/) | [`seguridad.sql`](sql/tecnico/seguridad.sql) | ✅ Completo |
+| Índices (optimización: clustered simple y compuesto) | [`docs/etapa-05/indices_optimizacion`](docs/etapa-05/indices_optimizacion/) | [`indices_optimizacion.sql`](sql/tecnico/indices_optimizacion.sql) | ✅ Completo |
 
 ---
 
