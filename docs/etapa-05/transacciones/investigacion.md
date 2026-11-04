@@ -82,7 +82,7 @@ Permite anular una venta previamente registrada. Dentro de un `BEGIN TRANSACTION
 
 * * *
 
-## 🧪 4. Análisis de la Batería de Pruebas y Evidencias de Ejecución
+## 🧪 4. Análisis de Pruebas y Evidencias de Ejecución
 
 Para respaldar el informe con evidencia empírica, se ejecutó una batería de **9 casos de prueba autocontenidos** en SQL Server Management Studio (SSMS).
 
@@ -106,8 +106,10 @@ Las imágenes que certifican las pruebas ejecutadas en SSMS se ubican en la carp
 
 | Evidencia | Descripción |
 |-----------|-------------|
-| 🖼️ **`venta_exitosa.png`** | Muestra la ejecución de la Prueba 1 con el mensaje *"Venta registrada con éxito"* y el resultado de las tres tablas pobladas con datos e inventario actualizado. |
-| 🖼️ **`prueba_rollback.png`** | Muestra la ejecución de la Prueba 2/3 con el recuadro de mensaje de error `RAISERROR` en rojo demostrando la reversión total por `ROLLBACK TRANSACTION`. |
+| 🖼️ **`01_stock_antes/despues.png`**
+  🖼️ **`01_stock_despues.png`**| Muestra la ejecución de la Prueba 1 con el mensaje *"Venta registrada con éxito"* y el resultado de las tres tablas pobladas con datos e inventario actualizado. |
+| 🖼️ **`02_stock_insuficiente.png`**
+  🖼️ **`03_falla_item2.png`**| Muestra la ejecución de la Prueba 2/3 con el recuadro de mensaje de error `RAISERROR` en rojo demostrando la reversión total por `ROLLBACK TRANSACTION`. |
 
 * * *
 
